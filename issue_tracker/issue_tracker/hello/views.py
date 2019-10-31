@@ -10,11 +10,29 @@ class HomePageView(View):
         response_text = textwrap.dedent('''\
             <html>
             <head>
-                <title>Greetings to the world</title>
+                <title>Issue Tracker</title>
             </head>
             <body>
-                <h1>Greetings to the world</h1>
-                <p>Benvolgut món.</p>
+                <style>
+                .button {
+                  background-color: #1E90FF;
+                  border: none;
+                  color: black;
+                  padding: 15px 25px;
+                  text-align: center;
+                  font-size: 16px;
+                  cursor: pointer;
+                }
+
+                .button:hover {
+                  background-color: blue;
+                }
+                </style>
+                <h1>Issue Tracker</h1>
+                <form action="http://google.com">
+                 <button class="button">Nova Issue</button>
+                </form> 
+
             </body>
             </html>
         ''')
