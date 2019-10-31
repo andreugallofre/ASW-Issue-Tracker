@@ -50,7 +50,7 @@ class NovaIssue(View):
                   <body>
                     <h1>Nova Issue</h1>
 
-                     <form>
+                     <form action="issue">
                       <div>
                         <label>Títol</label>
                         <input type="text">
@@ -93,6 +93,41 @@ class NovaIssue(View):
 
 
                   </body>
+            </html>
+        ''')
+        return HttpResponse(response_text)
+
+class Issue(View):
+
+    def dispatch(request, *args, **kwargs):
+        response_text = textwrap.dedent('''\
+            <html>
+            <head>
+                <title>Issue Tracker</title>
+            </head>
+            <body>
+                <style>
+                .button {
+                  background-color: #1E90FF;
+                  border: none;
+                  color: black;
+                  padding: 15px 25px;
+                  text-align: center;
+                  font-size: 16px;
+                  cursor: pointer;
+                }
+
+                .button:hover {
+                  background-color: blue;
+                }
+                </style>
+                <h1>Issue Tracker</h1>
+                <form action="nova_issue">
+                 <button class="button">Nova Issue</button>
+                </form>
+                <b>Issues:</b>
+
+            </body>
             </html>
         ''')
         return HttpResponse(response_text)

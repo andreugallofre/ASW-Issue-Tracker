@@ -18,9 +18,11 @@ from django.urls import path
 from django.conf.urls import url
 from issue_tracker.hello.views import HomePageView
 from issue_tracker.hello.views import NovaIssue
+from issue_tracker.hello.views import Issue
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('nova_issue/',NovaIssue.as_view()),
+    path('issue/',Issue.as_view()),
     url(r'^$', HomePageView.as_view(), name='home'),
 ]
