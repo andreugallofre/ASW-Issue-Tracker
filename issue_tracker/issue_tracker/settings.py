@@ -55,7 +55,7 @@ ROOT_URLCONF = 'issue_tracker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['/home/guille/Documents/ASW/ASW-Issue-Tracker/issue_tracker/issue_tracker/hello',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -23,6 +23,6 @@ from issue_tracker.hello.views import Issue
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('nova_issue/',NovaIssue.as_view()),
-    path('issue/',Issue.as_view()),
+    path('issue/',Issue.as_view()),  
     url(r'^$', HomePageView.as_view(), name='home'),
 ]
