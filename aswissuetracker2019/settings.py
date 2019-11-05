@@ -25,7 +25,7 @@ SECRET_KEY = 'fa-=$otifc%qph+lsgdho1vz8^65s4z8xr_2nerz%(#t($qlw*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['asw-issue-trk-2019.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['asw-issue-trk-2019.herokuapp.com', 'localhost', 'asw-issue-tracker-2019.herokuapp.com']
 
 
 # Application definition
