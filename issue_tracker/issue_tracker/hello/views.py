@@ -125,7 +125,8 @@ class Issue(View):
                 <title>Issue Creada</title>
                 </head>
                 <body>
-                ''' + form.cleaned_data['titol'] + '''
+                <h1>''' + form.cleaned_data['titol'] + '''</h1>
+                '''+form.cleaned_data['descripcio']+'''
                 </body>
                 </html>
               ''')
