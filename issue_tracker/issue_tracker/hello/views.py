@@ -21,7 +21,7 @@ class HomePageView(View):
             <head>
                 <title>Issue Tracker</title>
             </head>
-            <body>
+            <body bgcolor="#E6E6FA">
                 <style>
                 .button {
                   background-color: #1E90FF;
@@ -124,7 +124,7 @@ class Issue(View):
                 <head>
                 <title>Issue Creada</title>
                 </head>
-                <body>
+                <body bgcolor="#E6E6FA">
                 <h1>''' + form.cleaned_data['titol'] + '''</h1>
                 '''+form.cleaned_data['descripcio']+'''
                 <p>Tipus:<b> '''+form.cleaned_data['tipus']+'''</b>
