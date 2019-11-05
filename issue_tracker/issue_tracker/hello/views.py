@@ -127,7 +127,8 @@ class Issue(View):
                 <body>
                 <h1>''' + form.cleaned_data['titol'] + '''</h1>
                 '''+form.cleaned_data['descripcio']+'''
-                <p><b> '''+form.cleaned_data['tipus']+'''</b></p>
+                <p>Tipus:<b> '''+form.cleaned_data['tipus']+'''</b>
+                Prioritat: <b>'''+form.cleaned_data['prioritat']+'''</b></p>
                 </body>
                 </html>
               ''')
