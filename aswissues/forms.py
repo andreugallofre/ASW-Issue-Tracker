@@ -10,3 +10,8 @@ class NovaIssueForm(forms.Form):
     tipus = forms.ChoiceField(label='Tipus', widget=forms.Select, choices=tria1)
     tria2 = (('Trivial', 'Trivial'),('Menor', 'menor'), ('Major', 'major'), ('Crítica', 'critica'), ('Bloquejant', 'bloquejant'),)
     prioritat = forms.ChoiceField(label='Prioritat', widget=forms.Select, choices=tria2)
+
+
+class LoginForm(forms.Form):
+    nomUsuari = forms.CharField(label='Usuari', max_length=100)
+    clauUsuari = forms.CharField(label='Mot de pas',widget=forms.PasswordInput, max_length=100)

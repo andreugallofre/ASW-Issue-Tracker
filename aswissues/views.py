@@ -4,6 +4,7 @@ from urllib.parse import parse_qs
 # from flask import Flask, render_template, request
 import datetime
 from .forms import NovaIssueForm
+from .forms import LoginForm
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -39,6 +40,9 @@ class HomePageView(View):
                 <h1>Issue Tracker</h1>
                 <form action="issue">
                  <button class="button">Nova Issue</button>
+                </form>
+                <form action="login">
+                 <button class="button">Iniciar Sessió</button>
                 </form>
                 <b>Issues:</b>
             </body>
@@ -102,6 +106,34 @@ class NovaIssue(View):
             </html>
         ''')
         return HttpResponse(response_text)
+
+class Login(View):
+    form_class = LoginForm
+    initial = {'key': 'value'}
+    template_name = 'login.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            response_text = textwrap.dedent('''\
+                <html>
+                <head>
+                <title>Issue Creada</title>
+                </head>
+                <body bgcolor="#E6E6FA">
+                ''' + form.cleaned_data['nomUsuari'] + '''
+                '''+form.cleaned_data['clauUsuari']+'''
+                </body>
+                </html>
+              ''')
+            # <process form cleaned data>
+            return HttpResponse(response_text)
+        else:
+            return render(request, self.template_name, {'form': form})
 
 
 class Issue(View):
