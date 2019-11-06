@@ -5,6 +5,7 @@ from urllib.parse import parse_qs
 import datetime
 from .forms import NovaIssueForm
 from .forms import LoginForm
+from .forms import RegisterForm
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -148,7 +149,34 @@ class Login(View):
                 </body>
                 </html>
               ''')
-            # <process form cleaned data>
+            return HttpResponse(response_text)
+        else:
+            return render(request, self.template_name, {'form': form})
+
+class Register(View):
+    form_class = RegisterForm
+    initial = {'key': 'value'}
+    template_name = 'register.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            response_text = textwrap.dedent('''\
+                <html>
+                <head>
+                <title>Usuari creat</title>
+                </head>
+                <body bgcolor="#E6E6FA">
+                ''' + form.cleaned_data['nomUsuari'] + '''
+                '''+form.cleaned_data['clauUsuari']+'''
+                '''+form.cleaned_data['emailUsuari']+'''
+                </body>
+                </html>
+              ''')
             return HttpResponse(response_text)
         else:
             return render(request, self.template_name, {'form': form})

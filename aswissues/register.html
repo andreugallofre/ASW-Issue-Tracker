@@ -6,10 +6,10 @@ type="text/css" href="{% static 'StyleLogin.css' %}">
 <div class="login-page">
   <div class="form">
     <form class="login-form" action="" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Entrar-hi</button>
-        <p class="message">No hi esteu registrat? <a href="../register">Registreu-vos-hi</a></p>
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit">Crear</button>
+      <p class="message">Ja teniu compte? <a href="../login">Inicieu la Sessió</a></p>
     </form>
   </div>
 </div>

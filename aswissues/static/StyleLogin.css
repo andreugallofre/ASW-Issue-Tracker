@@ -47,7 +47,7 @@
   font-size: 12px;
 }
 .form .message a {
-  color: #4CAF50;
+  color: #1E90FF;
   text-decoration: none;
 }
 .form .register-form {
@@ -76,11 +76,11 @@
   color: #1a1a1a;
 }
 .container .info span {
-  color: #4d4d4d;
+  color: #1E90FF;
   font-size: 12px;
 }
 .container .info span a {
-  color: #000000;
+  color: #1E90FF;
   text-decoration: none;
 }
 .container .info span .fa {

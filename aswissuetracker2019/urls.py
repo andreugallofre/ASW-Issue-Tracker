@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from aswissues.views import NovaIssue, Issue, HomePageView, Login
+from aswissues.views import NovaIssue, Issue, HomePageView, Login, Register
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('nova_issue/', NovaIssue.as_view()),
     path('issue/', Issue.as_view()),
     path('login/', Login.as_view()),
+    path('register/', Register.as_view()),
     url(r'^$', HomePageView.as_view(), name='home'),
 ]
