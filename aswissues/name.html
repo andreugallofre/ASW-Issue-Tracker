@@ -1,8 +1,16 @@
+<body bgcolor="#E6E6FA">
 <form style="width:100%" action="" method="post">
     {% csrf_token %}
     {{ form.file_name }}
+    <div style="text-align:center;">
+      <b> Nova Issue </b>
+    </div>
     <table style="width:100%">
         {{ form.as_table }}
     </table>
-    <input style='float: left;' type="submit" value="Crea l'issue">
+    <div style="text-align:center;">
+      <input type="submit" value="Crea l'issue">
+    </div>
+
+
 </form>
