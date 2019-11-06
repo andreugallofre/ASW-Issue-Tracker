@@ -1,8 +1,14 @@
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.file_name }}
-    <table>
-        {{ form.as_table }}
-    </table>
-    <input type="submit" value="Entrar-hi">
-</form>
+{% load static %}
+
+<link rel="stylesheet"
+type="text/css" href="{% static 'StyleLogin.css' %}">
+
+<div class="login-page">
+  <div class="form">
+    <form class="login-form" action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Entrar-hi</button>
+    </form>
+  </div>
+</div>

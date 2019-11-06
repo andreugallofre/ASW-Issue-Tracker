@@ -24,6 +24,12 @@ class HomePageView(View):
             </head>
             <body bgcolor="#E6E6FA">
                 <style>
+                h1{
+                display: inline-block;
+                }
+                th {
+                    text-align: left;
+                }
                 .button {
                   background-color: #1E90FF;
                   border: none;
@@ -37,49 +43,24 @@ class HomePageView(View):
                   background-color: blue;
                 }
                 </style>
-                <h1>Issue Tracker</h1>
+                    <h1>Issue Tracker</h1>
+                    <div style='float: right;'><a href="login">Iniciar Sessió</a></div>
                 <form action="issue">
-                 <button class="button">Nova Issue</button>
+                    <button class="button">Nova Issue</button>
                 </form>
-                <form action="login">
-                 <button class="button">Iniciar Sessió</button>
-                </form>
+
                 <b>Issues:</b>
-                <table>
+                <table style="width:100%">
                   <tr>
-                    <th>Company</th>
-                    <th>Contact</th>
-                    <th>Country</th>
+                    <th>Títol</th>
+                    <th>Tipus</th>
+                    <th>Prioritat</th>
                   </tr>
                   <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
+                    <td>Prova1</td>
+                    <td>Bug</td>
+                    <td>Bloquejant</td>
                   </tr>
-                  <tr>
-                    <td>Centro comercial Moctezuma</td>
-                    <td>Francisco Chang</td>
-                    <td>Mexico</td>
-                  </tr>
-                  <tr>
-                    <td>Ernst Handel</td>
-                    <td>Roland Mendel</td>
-                    <td>Austria</td>
-                  </tr>
-                  <tr>
-                    <td>Island Trading</td>
-                    <td>Helen Bennett</td>
-                    <td>UK</td>
-                  </tr>
-                  <tr>
-                    <td>Laughing Bacchus Winecellars</td>
-                    <td>Yoshi Tannamuri</td>
-                    <td>Canada</td>
-                  </tr>
-                  <tr>
-                    <td>Magazzini Alimentari Riuniti</td>
-                    <td>Giovanni Rovelli</td>
-                    <td>Italy</td>
                   </tr>
                 </table>
             </body>
