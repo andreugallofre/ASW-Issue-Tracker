@@ -5,7 +5,7 @@ from urllib.parse import parse_qs
 # from flask import Flask, render_template, request
 from datetime import date
 from .forms import NovaIssueForm, LoginForm, RegisterForm
-from .models import Issue
+from .models import Issue, User
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -14,13 +14,23 @@ from django.template import loader
 
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
 
 
 # Create your views here.
-class HomePageView(View):
-    def dispatch(self, request, *args, **kwargs):
-        template = loader.get_template("homepage.html")
-        return HttpResponse(template.render())
+class HomePageView(ListView):
+    model = Issue
+    template_name = 'homepage.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class Test2(CreateView):
+    model = User
+    template_name = 'name.html'
+    fields = ['name', 'email']
 
 
 class Login(View):

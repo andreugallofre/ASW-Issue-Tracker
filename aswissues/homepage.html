@@ -38,12 +38,15 @@
               <th>Tipus</th>
               <th>Prioritat</th>
             </tr>
+            {% for issue in object_list %}
             <tr>
-              <td>Prova1</td>
-              <td>Bug</td>
-              <td>Bloquejant</td>
+              <td>{{ issue.titol }}</td>
+              <td>{{ issue.tipus }}</td>
+              <td>{{ issue.prioritat }}</td>
             </tr>
             </tr>
+            {% empty %}
+            {% endfor %}
           </table>
       </body>
 </html>
