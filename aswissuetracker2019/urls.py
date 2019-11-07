@@ -16,12 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from aswissues.views import Issue, Login, Register
+from aswissues.views import Issue, Login, Register, HomePageView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('issue/', Issue.as_view()),
     path('login/', Login.as_view()),
     path('register/', Register.as_view()),
-    # url(r'^$', HomePageView.as_view(), name='home'),
+    url(r'^$', HomePageView.as_view(), name='home'),
 ]
