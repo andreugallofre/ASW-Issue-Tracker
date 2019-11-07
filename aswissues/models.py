@@ -20,7 +20,7 @@ class Issue(models.Model):
       default=TipusSelector.Millora
     )
     prioritat = models.CharField(
-      max_length=5,
+      max_length=10,
       choices=[(tag.name, tag.value) for tag in PrioritatSelector],  # Choices is a list of Tuple
       default=PrioritatSelector.Trivial
     )

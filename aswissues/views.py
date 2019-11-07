@@ -15,12 +15,12 @@ from django.template import loader
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView
 
+
 # Create your views here.
 class HomePageView(View):
     def dispatch(self, request, *args, **kwargs):
         template = loader.get_template("homepage.html")
         return HttpResponse(template.render())
-
 
 
 class Login(View):
