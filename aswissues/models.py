@@ -1,4 +1,5 @@
 from django.db import models
+from .enums import TipusSelector, PrioritatSelector
 
 
 class User(models.Model):
@@ -13,6 +14,16 @@ class Issue(models.Model):
     creator = models.ForeignKey(User, related_name='Creator',  on_delete=models.CASCADE)
     assignee = models.ForeignKey(User, related_name='Assignee', on_delete=models.CASCADE)
     watchers = models.ManyToManyField(User)
+    tipus = models.CharField(
+      max_length=10,
+      choices=[(tag.name, tag.value) for tag in TipusSelector],  # Choices is a list of Tuple
+      default=TipusSelector.Millora
+    )
+    prioritat = models.CharField(
+      max_length=5,
+      choices=[(tag.name, tag.value) for tag in PrioritatSelector],  # Choices is a list of Tuple
+      default=PrioritatSelector.Trivial
+    )
 
 
 class Comment(models.Model):
