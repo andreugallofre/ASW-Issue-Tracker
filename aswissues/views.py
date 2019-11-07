@@ -3,9 +3,7 @@ import urllib.parse as urlparse
 from urllib.parse import parse_qs
 # from flask import Flask, render_template, request
 import datetime
-from .forms import NovaIssueForm
-from .forms import LoginForm
-from .forms import RegisterForm
+from .forms import NovaIssueForm, LoginForm, RegisterForm
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -16,59 +14,11 @@ from django.template import loader
 
 # Create your views here.
 class HomePageView(View):
+    with open('homepage.html', 'r') as fitxer:
+        data = fitxer.read()
 
     def dispatch(request, *args, **kwargs):
-        response_text = textwrap.dedent('''\
-            <html>
-            <head>
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-                <title>Issue Tracker</title>
-            </head>
-            <body bgcolor="#E6E6FA">
-                <style>
-                h1{
-                display: inline-block;
-                }
-                th {
-                    text-align: left;
-                }
-                .button {
-                  background-color: #1E90FF;
-                  border: none;
-                  color: black;
-                  padding: 15px 25px;
-                  text-align: center;
-                  font-size: 16px;
-                  cursor: pointer;
-                }
-                .button:hover {
-                  background-color: blue;
-                }
-                </style>
-                    <h1>Issue Tracker</h1>
-                    <div style='float: right;'><a href="login">Iniciar Sessió</a></div>
-                <form action="issue">
-                    <button class="button">Nova Issue</button>
-                </form>
-
-                <b>Issues:</b>
-                <table class="table table-striped">
-                  <tr>
-                    <th>Títol</th>
-                    <th>Tipus</th>
-                    <th>Prioritat</th>
-                  </tr>
-                  <tr>
-                    <td>Prova1</td>
-                    <td>Bug</td>
-                    <td>Bloquejant</td>
-                  </tr>
-                  </tr>
-                </table>
-            </body>
-            </html>
-        ''')
+        response_text = textwrap.dedent(data)
         return HttpResponse(response_text)
 
 
