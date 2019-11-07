@@ -21,6 +21,8 @@ class HomePageView(View):
         response_text = textwrap.dedent('''\
             <html>
             <head>
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
                 <title>Issue Tracker</title>
             </head>
             <body bgcolor="#E6E6FA">
@@ -51,7 +53,7 @@ class HomePageView(View):
                 </form>
 
                 <b>Issues:</b>
-                <table style="width:100%">
+                <table class="table table-striped">
                   <tr>
                     <th>Títol</th>
                     <th>Tipus</th>
@@ -70,61 +72,6 @@ class HomePageView(View):
         return HttpResponse(response_text)
 
 
-class NovaIssue(View):
-
-    def dispatch(request, *args, **kwargs):
-        response_text = textwrap.dedent('''\
-            <html>
-                  <head>
-                      <title>Nova Issue</title>
-                  </head>
-                  <body>
-                    <h1>Nova Issue</h1>
-                     <form action="issue" method="post">
-                      <style>
-                      label {
-                        display: inline-block;
-                        width: 140px;
-                        text-align: left;
-                      }​
-                      .button {
-                        background-color: #1E90FF;
-                        border: none;
-                        color: black;
-                        padding: 15px 25px;
-                        text-align: center;
-                        font-size: 16px;
-                        cursor: pointer;
-                      }
-                      .button:hover {
-                        background-color: blue;
-                      }
-                      </style>
-                      <label>Títol</label>
-                      <input name= "text" type="text"><br>
-                      <label>Descripció</label>
-                      <textarea name="comment" rows="10" cols="50">Expliqueu l'issue...</textarea><br>
-                      <label>Tipus</label>
-                        <select name="tipus">
-                          <option value="bug">Bug</option>
-                          <option value="millora">Millora</option>
-                          <option value="proposta">Proposta</option>
-                          <option value="tasca">Tasca</option>
-                        </select><br>
-                      <label>Prioritat</label>
-                      <select name="prioritat">
-                        <option value="trivial">Trivial</option>
-                        <option value="menor">Menor</option>
-                        <option value="major">Major</option>
-                        <option value="critica">Crítica</option>
-                        <option value="bloquejant">Bloquejant</option>
-                      </select><br>
-                    <button class="button">Crear issue</button>
-                    </form>
-                  </body>
-            </html>
-        ''')
-        return HttpResponse(response_text)
 
 class Login(View):
     form_class = LoginForm
