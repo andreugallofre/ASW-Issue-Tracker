@@ -1,5 +1,6 @@
 import textwrap3 as textwrap
 import urllib.parse as urlparse
+import os
 from urllib.parse import parse_qs
 # from flask import Flask, render_template, request
 import datetime
@@ -14,12 +15,9 @@ from django.template import loader
 
 # Create your views here.
 class HomePageView(View):
-    with open('homepage.html', 'r') as fitxer:
-        data = fitxer.read()
-
-    def dispatch(request, *args, **kwargs):
-        response_text = textwrap.dedent(data)
-        return HttpResponse(response_text)
+    def dispatch(self, request, *args, **kwargs):
+        template = loader.get_template("homepage.html")
+        return HttpResponse(template.render())
 
 
 
