@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='issue',
             name='prioritat',
-            field=models.CharField(choices=[('Trivial', 'Trivial'), ('Menor', 'Menor'), ('Major', 'Major'), ('Critica', 'Crítica'), ('Bloquejant', 'Bloquejant')], default=aswissues.enums.PrioritatSelector('Trivial'), max_length=5),
+            field=models.CharField(choices=[('Trivial', 'Trivial'), ('Menor', 'Menor'), ('Major', 'Major'), ('Critica', 'Crítica'), ('Bloquejant', 'Bloquejant')], default=aswissues.enums.PrioritatSelector('Trivial'), max_length=10),
         ),
         migrations.AddField(
             model_name='issue',
