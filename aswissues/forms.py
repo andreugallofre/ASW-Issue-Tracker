@@ -2,16 +2,17 @@ from django import forms
 from django.utils.safestring import mark_safe
 from .models import Issue, Attachment
 
-'''
-class NovaIssueForm(forms.ModelForm):
-    class Meta:
-        model = Issue
-        fields = ['titol', 'descripcio', 'tipus', 'prioritat']
+
 class NovaAttachmentForm(forms.ModelForm):
     class Meta:
         model = Attachment
         fields = ['issue','data']
-'''
+
+
+class NovaIssueForm(forms.ModelForm):
+    class Meta:
+        model = Issue
+        fields = ['titol', 'descripcio', 'tipus', 'prioritat','adjunt']
 
 class MultipleForm(forms.Form):
     action = forms.CharField(max_length=60, widget=forms.HiddenInput())
@@ -29,7 +30,7 @@ class RegisterForm(forms.Form):
     emailUsuari = forms.EmailField(label='Correu electrònic', max_length=100)
 
 
-class NovaIssueForm(forms.Form):
+class NewIssueForm(forms.Form):
     titol = forms.CharField(label='Títol', max_length=100)
     descripcio = forms.CharField(max_length=500, widget=forms.TextInput)
     opcionst = (('Bug', 'Bug'),('Millora', 'Millora'),('Tasca', 'Tasca'),('Proposta', 'Proposta'))

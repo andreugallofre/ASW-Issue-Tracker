@@ -102,6 +102,7 @@ class MultipleFormsMixin(ContextMixin):
         """
         return HttpResponseRedirect(self.get_success_url())
 
+
     def form_invalid(self, form):
         """
         If the form is invalid, re-render the context data with the

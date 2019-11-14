@@ -2,6 +2,8 @@ from django.db import models
 from .enums import TipusSelector, PrioritatSelector
 
 
+
+
 class User(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -24,6 +26,7 @@ class Issue(models.Model):
       choices=[(tag.name, tag.value) for tag in PrioritatSelector],  # Choices is a list of Tuple
       default=PrioritatSelector.Trivial
     )
+    adjunt = models.FileField(blank=True)
 
 
 class Comment(models.Model):
