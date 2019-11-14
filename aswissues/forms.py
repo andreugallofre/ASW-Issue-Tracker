@@ -30,7 +30,7 @@ class RegisterForm(forms.Form):
 
 
 class NovaIssueForm(forms.Form):
-    titol = forms.CharField(label='Usuari', max_length=100)
+    titol = forms.CharField(label='Títol', max_length=100)
     descripcio = forms.CharField(max_length=500, widget=forms.TextInput)
     opcionst = (('Bug', 'Bug'),('Millora', 'Millora'),('Tasca', 'Tasca'),('Proposta', 'Proposta'))
     tipus = forms.ChoiceField(choices=opcionst)
@@ -38,4 +38,4 @@ class NovaIssueForm(forms.Form):
     prioritat = forms.ChoiceField(choices=opcionsp)
 
 class NovaAttachmentForm(forms.Form):
-    data =  forms.FileField()
+    Fitxer =  forms.FileField()

@@ -111,6 +111,7 @@ class MultipleFormsDemoView(MultipleFormsView):
 
     def form_valid(self, form):
         print("yay it's valid!")
+        print(form.cleaned_data['Títol'])
         return super(MultipleFormsDemoView, self).form_valid(form)
 
 
