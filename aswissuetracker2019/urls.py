@@ -16,13 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from aswissues.views import Issue, Login, Register, HomePageView, Test2
+from aswissues.views import Issue, Login, Register, HomePageView, Test2, MultipleFormsDemoView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('issue/', Issue.as_view()),
+    #path('issue/', Issue.as_view()),
     path('login/', Login.as_view()),
     path('register/', Register.as_view()),
     path('test2/', Test2.as_view(success_url="/")),
     url(r'^$', HomePageView.as_view(), name='home'),
+    url(r'', MultipleFormsDemoView.as_view(), name='forms'),
 ]
