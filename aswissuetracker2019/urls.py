@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from aswissues.views import Issue, Login, Register, HomePageView, Test2
+from aswissues.views import NewIssue, Login, Register, HomePageView, Test2, DetailedIssue
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('issue/', Issue.as_view()),
+    path('issue/<slug:pk>/', DetailedIssue.as_view()),
+    path('issue/', NewIssue.as_view()),
     path('login/', Login.as_view()),
     path('register/', Register.as_view()),
     path('test2/', Test2.as_view(success_url="/")),

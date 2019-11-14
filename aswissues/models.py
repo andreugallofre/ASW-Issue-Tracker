@@ -24,7 +24,7 @@ class Issue(models.Model):
       choices=[(tag.name, tag.value) for tag in PrioritatSelector],  # Choices is a list of Tuple
       default=PrioritatSelector.Trivial
     )
-
+    
 
 class Comment(models.Model):
     content = models.TextField()
