@@ -14,11 +14,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='issue',
             name='prioritat',
-            field=models.CharField(choices=[('Trivial', 'Trivial'), ('Menor', 'Menor'), ('Major', 'Major'), ('Critica', 'Crítica'), ('Bloquejant', 'Bloquejant')], default=aswissues.enums.PrioritatSelector('Trivial'), max_length=20),
+            field=models.CharField(choices=[('Trivial', 'Trivial'), ('Menor', 'Menor'), ('Major', 'Major'), ('Critica', 'Crítica'), ('Bloquejant', 'Bloquejant')], default=aswissues.enums.PrioritatSelector('Trivial'), max_length=200),
         ),
         migrations.AlterField(
             model_name='issue',
             name='tipus',
-            field=models.CharField(choices=[('Bug', 'Bug'), ('Millora', 'Millora'), ('Proposta', 'Proposta'), ('Tasca', 'Tasca')], default=aswissues.enums.TipusSelector('Millora'), max_length=20),
+            field=models.CharField(choices=[('Bug', 'Bug'), ('Millora', 'Millora'), ('Proposta', 'Proposta'), ('Tasca', 'Tasca')], default=aswissues.enums.TipusSelector('Millora'), max_length=200),
         ),
     ]
