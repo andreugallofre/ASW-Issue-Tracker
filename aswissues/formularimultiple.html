@@ -1,0 +1,14 @@
+<html>
+  <head></head>
+  <body>
+    <form method="post">
+  {% for form in forms %}
+
+      {% csrf_token %}
+      {{ form }}
+      <input type="hidden" name="selected_form" value="{{ forloop.counter0 }}">
+  {% endfor %}
+  <button type="submit">Submit</button>
+</form>
+  </body>
+</html>
