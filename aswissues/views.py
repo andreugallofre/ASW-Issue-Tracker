@@ -110,11 +110,27 @@ class MultipleFormsDemoView(MultipleFormsView):
         return forms_classes
 
     def form_valid(self, form):
-        print("yay it's valid!")
-        print(form.cleaned_data['Títol'])
+        print("it's valid!")
+        self.cleaned_data["Títol"]
+        formularis = super(MultipleFormsDemoView, self).get_forms()
+        kwargs = super(MultipleFormsDemoView, self).get_form_kwargs()
+        #formularis[1].cleaned_data["data"]
+        for k in formularis:
+            k.get_context_data(kwargs)
+
         return super(MultipleFormsDemoView, self).form_valid(form)
 
+class Issue(CreateView):
+    form_class = NovaIssueForm
+    model = Issue
+    template_name = 'name.html'
+    success_url = '/'
 
+    def form_valid(self, form):
+        form.instance.data_creacio = date.today()
+        form.instance.assignee_id = 1
+        form.instance.creator_id = 1
+        return super(Issue, self).form_valid(form)
 '''
 class Issue(View):
 

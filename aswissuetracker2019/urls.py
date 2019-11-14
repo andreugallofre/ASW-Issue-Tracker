@@ -20,7 +20,7 @@ from aswissues.views import Issue, Login, Register, HomePageView, Test2, Multipl
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('issue/', Issue.as_view()),
+    path('issue/', Issue.as_view()),
     path('login/', Login.as_view()),
     path('register/', Register.as_view()),
     path('test2/', Test2.as_view(success_url="/")),
