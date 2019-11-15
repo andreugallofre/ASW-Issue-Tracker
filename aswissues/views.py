@@ -93,33 +93,6 @@ class Register(View):
         else:
             return render(request, self.template_name, {'form': form})
 
-class MultipleFormsDemoView(MultipleFormsView):
-    template_name = 'formularimultiple.html'
-    success_url = '/'
-
-    # here we specify all forms that should be displayed
-    forms_classes = [
-        forms.NovaIssueForm,
-        forms.NovaAttachmentForm
-    ]
-
-    def get_forms_classes(self):
-        # we hide staff_only forms from not-staff users
-        # our goal no. 3 about dynamic amount list of forms
-        forms_classes = super(MultipleFormsDemoView, self).get_forms_classes()
-        return forms_classes
-
-    def form_valid(self, form):
-        print("it's valid!")
-        self.cleaned_data["Títol"]
-        formularis = super(MultipleFormsDemoView, self).get_forms()
-        kwargs = super(MultipleFormsDemoView, self).get_form_kwargs()
-        #formularis[1].cleaned_data["data"]
-        for k in formularis:
-            k.get_context_data(kwargs)
-
-        return super(MultipleFormsDemoView, self).form_valid(form)
-
 class Issue(CreateView):
     form_class = NovaIssueForm
     model = Issue
