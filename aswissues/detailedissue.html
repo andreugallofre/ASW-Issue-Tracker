@@ -18,7 +18,7 @@
 
         <!-- Comments form -->
         <h3>Comentaris ({{object.comment_set.all|length}})</h3>
-        <form style="width:100%" action="" method="post">
+        <form style="width:100%" action="/" method="post">
             {% csrf_token %}
             {{ form.file_name }}
             {{ form|crispy }}
