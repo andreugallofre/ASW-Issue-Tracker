@@ -99,7 +99,7 @@ class NewIssue(CreateView):
     form_class = NovaIssueForm
     model = Issue
     template_name = 'name.html'
-    success_url = '/'
+    success_url = 'issue'
 
     def form_valid(self, form):
         form.instance.data_creacio = date.today()

@@ -17,13 +17,13 @@
         <hr class="col-xs-12">
 
         <!-- Comments form -->
-        <h3>Comments ({{object.comment_set.all|length}})</h3>
+        <h3>Comentaris ({{object.comment_set.all|length}})</h3>
         <form style="width:100%" action="" method="post">
             {% csrf_token %}
             {{ form.file_name }}
             {{ form|crispy }}
             <div style="text-align:center;">
-                <input type="submit" value="Comment">
+                <input type="submit" value="Comenteu">
             </div>
         </form>
 
