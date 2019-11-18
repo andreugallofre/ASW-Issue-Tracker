@@ -22,7 +22,7 @@ from aswissues.views import NewIssue, Login, Register, HomePageView, Test2, Deta
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('issue/<slug:pk>/', DetailedIssue.as_view()),
+    path('issue/<slug:pk>/', DetailedIssue.as_view(), name = "issueDetall"),
     path('issue/', NewIssue.as_view()),
     path('login/', Login.as_view()),
     path('register/', Register.as_view()),
