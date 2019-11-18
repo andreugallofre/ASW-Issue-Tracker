@@ -118,6 +118,7 @@ class DetailedIssue(CreateView, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # canviar-ho per statuses i no per prioritats!
         context['prioritatSelector'] = PrioritatSelector.__members__
         return context
 
