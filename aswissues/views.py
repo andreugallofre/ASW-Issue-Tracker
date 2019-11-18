@@ -8,6 +8,7 @@ from datetime import date
 from .forms import NovaIssueForm, LoginForm, RegisterForm, NovaAttachmentForm, CommentForm
 from .models import Issue, User, Comment
 from .multiple_form import MultipleFormsView
+from .enums import PrioritatSelector
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -117,6 +118,7 @@ class DetailedIssue(CreateView, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['prioritatSelector'] = PrioritatSelector.__members__
         return context
 
     def form_valid(self, form):

@@ -81,8 +81,9 @@
                                 Status
                             </button>
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                <a class="dropdown-item" href="#">Dropdown link</a>
+                                {% for i in prioritatSelector%}
+                                <a class="dropdown-item" href="#">{{i}}</a>
+                                {% endfor %}
                             </div>
                         </div>
 
