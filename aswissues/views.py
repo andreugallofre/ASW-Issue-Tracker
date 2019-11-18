@@ -99,7 +99,7 @@ class NewIssue(CreateView):
     form_class = NovaIssueForm
     model = Issue
     template_name = 'name.html'
-    success_url = 'issue'
+    success_url = ''
 
     def form_valid(self, form):
         form.instance.data_creacio = date.today()
@@ -113,6 +113,7 @@ class DetailedIssue(CreateView, DetailView):
     form_class = CommentForm
     model = Issue
     template_name = 'detailedissue.html'
+    success_url = ''
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
