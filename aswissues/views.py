@@ -1,11 +1,13 @@
 import textwrap3 as textwrap
 import urllib.parse as urlparse
-import os
 from urllib.parse import parse_qs
+from django.contrib import messages
+from aswissues import forms
 # from flask import Flask, render_template, request
 from datetime import date
-from .forms import NovaIssueForm, LoginForm, RegisterForm, CommentForm
+from .forms import NovaIssueForm, LoginForm, RegisterForm, NovaAttachmentForm, CommentForm
 from .models import Issue, User, Comment
+from .multiple_form import MultipleFormsView
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -16,6 +18,7 @@ from django.views.generic.base import View
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+
 
 
 
@@ -96,6 +99,7 @@ class NewIssue(CreateView):
     form_class = NovaIssueForm
     model = Issue
     template_name = 'name.html'
+    success_url = '/'
 
     def form_valid(self, form):
         form.instance.data_creacio = date.today()
