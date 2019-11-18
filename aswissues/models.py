@@ -26,7 +26,7 @@ class Issue(models.Model):
       choices=[(tag.name, tag.value) for tag in PrioritatSelector],  # Choices is a list of Tuple
       default=PrioritatSelector.Trivial
     )
-    adjunt = models.FileField(blank=True)
+    adjunt = models.FileField(upload_to="media",blank=True)
 
 
 
