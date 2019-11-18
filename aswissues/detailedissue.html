@@ -6,44 +6,130 @@
         crossorigin="anonymous"></script>
     {% load crispy_forms_tags %}
 
+    <style>
+        dl {
+            width: 100%;
+            overflow: hidden;
+            padding: 10px;
+            margin: 0
+        }
+
+        dt {
+            float: left;
+            width: 50%;
+            /* adjust the width; make sure the total of both is 100% */
+            padding: 0;
+            margin: 0
+        }
+
+        dd {
+            float: left;
+            width: 50%;
+            /* adjust the width; make sure the total of both is 100% */
+            padding: 0;
+            margin: 0
+        }
+    </style>
     <div class="container mt-4">
-        <!-- Issue details -->
-        <b>Issue #{{ object.id}} </b> {{ object.tipus}} </br>
-        <h1>{{ object.titol }}</h1>
-        <p>
-            {{object.descripcio}}
-            <div>
-            <a class="attachment" href="/aswissues/{{object.adjunt}}">{{object.adjunt}}</a>
+        <div class="row">
+            <div class="col-8">
+                <!-- Issue details -->
+                <b>Issue #{{ object.id}} </b> {{ object.tipus}} </br>
+                <h1>{{ object.titol }}</h1>
+                <p>
+                    {{object.descripcio}}
+                    <div>
+                        <a class="attachment" href="/aswissues/{{object.adjunt}}">{{object.adjunt}}</a>
+                    </div>
+                </p>
 
+                <hr class="col-xs-12">
+                <!-- Comments form -->
+                <h3>Comentaris ({{object.comment_set.all|length}})</h3>
+                <form style="width:100%" action="/" method="post">
+                    {% csrf_token %}
+                    {{ form.file_name }}
+                    {{ form|crispy }}
+                    <div style="text-align:center;">
+                        <input type="submit" value="Comenteu">
+                    </div>
+                </form>
+
+                <!-- put here the rest of comments -->
+                {% for entry in object.comment_set.all %}
+                <article class="iterable-item" data-comment-id="54516571" data-convert-markup="False"
+                    data-content="test">
+                    <header>
+                        <span class="author author-name">{{entry.owner}}</span>
+                    </header>
+                    <div class="wiki-content comment-content">
+                        <p>{{entry.content}}</p>
+                    </div>
+                </article>
+                {% empty %}
+                <!-- no entries -->
+                {% endfor %}
             </div>
-        </p>
 
-        <hr class="col-xs-12">
+            <div class="col-4">
+                <!-- dropdown for the statuses -->
+                <div class="row-8">
+                    <div class="dropdown mb-4">
+                        <a class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Status
+                        </a>
 
-        <!-- Comments form -->
-        <h3>Comentaris ({{object.comment_set.all|length}})</h3>
-        <form style="width:100%" action="/" method="post">
-            {% csrf_token %}
-            {{ form.file_name }}
-            {{ form|crispy }}
-            <div style="text-align:center;">
-                <input type="submit" value="Comenteu">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Issue Information -->
+                <div class="row-8">
+                    <div style="border: thin solid #d0d0d0">
+                        <dl>
+                            <dt>Assignee</dt>
+                            <dd>{{object.assignee}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>Type</dt>
+                            <dd>{{object.tipus}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>Priority</dt>
+                            <dd>{{object.prioritat}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>Status</dt>
+                            <dd>{{object.status}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>Votes</dt>
+                            <dd>Value</dd>
+                        </dl>
+                        <dl>
+                            <dt>Watchers</dt>
+                            <dd>Value</dd>
+                        </dl>
+                    </div>
+                </div>
             </div>
-        </form>
-
-        <!-- put here the rest of comments -->
-        {% for entry in object.comment_set.all %}
-        <article class="iterable-item" data-comment-id="54516571" data-convert-markup="False" data-content="test">
-            <header>
-                <span class="author author-name">{{entry.owner}}</span>
-            </header>
-            <div class="wiki-content comment-content">
-                <p>{{entry.content}}</p>
-            </div>
-        </article>
-        {% empty %}
-        <!-- no entries -->
-        {% endfor %}
-
+        </div>
     </div>
+
+    <!-- needed for the dropdown menu -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
 </body>
