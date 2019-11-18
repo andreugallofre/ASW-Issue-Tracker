@@ -5,10 +5,9 @@ from django.contrib import messages
 from aswissues import forms
 # from flask import Flask, render_template, request
 from datetime import date
-from .forms import NovaIssueForm, LoginForm, RegisterForm, NovaAttachmentForm
-from .models import Issue, User
+from .forms import NovaIssueForm, LoginForm, RegisterForm, NovaAttachmentForm, CommentForm
+from .models import Issue, User, Comment
 from .multiple_form import MultipleFormsView
-
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -18,6 +17,8 @@ from django.template import loader
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+
 
 
 
@@ -93,7 +94,8 @@ class Register(View):
         else:
             return render(request, self.template_name, {'form': form})
 
-class Issue(CreateView):
+
+class NewIssue(CreateView):
     form_class = NovaIssueForm
     model = Issue
     template_name = 'name.html'
@@ -103,35 +105,21 @@ class Issue(CreateView):
         form.instance.data_creacio = date.today()
         form.instance.assignee_id = 1
         form.instance.creator_id = 1
-        return super(Issue, self).form_valid(form)
-'''
-class Issue(View):
+        return super(NewIssue, self).form_valid(form)
 
-    def post(self, request, *args, **kwargs):
-        if request.method == 'POST':
+# DJANGO DETAILED VIEW
+#afegir a urls
+class DetailedIssue(CreateView, DetailView):
+    form_class = CommentForm
+    model = Issue
+    template_name = 'detailedissue.html'
 
-            i_form = NovaIssueForm(request.POST)
-            i_form_valid = i_form.is_valid()
-            a_form = NovaAttachmentForm(request.POST,request.FILES)
-            a_form_valid = a_form.is_valid()
-            if i_form_valid and a_form_valid:
-                print("success")
-                # process the data
-                i_form.instance.data_creacio = date.today()
-                i_form.instance.assignee_id = 1
-                i_form.instance.creator_id = 1
-                i = i_form.save()
-                a_form.instance.issue = i
-                a = a_form.save()
-                return HttpResponseRedirect('/')
-    def get(self, request, *args, **kwargs):
-        i_form = NovaIssueForm()
-        a_form = NovaAttachmentForm()
-        return render(request, 'name.html',
-                      {'title': 'Nova issue', 'i_form': i_form,
-                       'a_form': a_form})
-'''
-    #form_classes = {'novaissue': NovaIssueForm,
-    #                'adjunt': NovaAttachmentForm}
-    #template_name = 'name.html'
-    #success_url = '/'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def form_valid(self, form):
+        form.instance.data_creacio = date.today()
+        form.instance.issue = Issue.objects.get(id=1)
+        form.instance.owner = User.objects.get(id=1)
+        return super(DetailedIssue, self).form_valid(form)

@@ -29,6 +29,7 @@ class Issue(models.Model):
     adjunt = models.FileField(blank=True)
 
 
+
 class Comment(models.Model):
     content = models.TextField()
     data_creacio = models.DateField()

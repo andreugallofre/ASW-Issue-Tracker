@@ -1,12 +1,13 @@
 from django import forms
 from django.utils.safestring import mark_safe
-from .models import Issue, Attachment
+from .models import Issue, Attachment, Comment
 
 
 class NovaAttachmentForm(forms.ModelForm):
     class Meta:
         model = Attachment
         fields = ['issue','data']
+
 
 
 class NovaIssueForm(forms.ModelForm):
@@ -29,6 +30,10 @@ class RegisterForm(forms.Form):
     clauUsuari = forms.CharField(label='Mot de pas',widget=forms.PasswordInput, max_length=100)
     emailUsuari = forms.EmailField(label='Correu electrònic', max_length=100)
 
+class CommentForm(forms.ModelForm):
+    class Meta:
+       model = Comment
+       fields = ['content']
 
 class NewIssueForm(forms.Form):
     titol = forms.CharField(label='Títol', max_length=100)
@@ -40,3 +45,4 @@ class NewIssueForm(forms.Form):
 
 class NovaAttachmentForm(forms.Form):
     Fitxer =  forms.FileField()
+

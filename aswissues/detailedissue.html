@@ -1,0 +1,45 @@
+<body bgcolor="#E6E6FA">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    {% load crispy_forms_tags %}
+
+    <div class="container mt-4">
+        <!-- Issue details -->
+        <b>Issue #{{ object.id}} </b> {{ object.tipus}} </br>
+        <h1>{{ object.titol }}</h1>
+        <p>
+            {{object.descripcio}}
+        </p>
+
+        <hr class="col-xs-12">
+
+        <!-- Comments form -->
+        <h3>Comments ({{object.comment_set.all|length}})</h3>
+        <form style="width:100%" action="" method="post">
+            {% csrf_token %}
+            {{ form.file_name }}
+            {{ form|crispy }}
+            <div style="text-align:center;">
+                <input type="submit" value="Comment">
+            </div>
+        </form>
+
+        <!-- put here the rest of comments -->
+        {% for entry in object.comment_set.all %}
+        <article class="iterable-item" data-comment-id="54516571" data-convert-markup="False" data-content="test">
+            <header>
+                <span class="author author-name">{{entry.owner}}</span>
+            </header>
+            <div class="wiki-content comment-content">
+                <p>{{entry.content}}</p>
+            </div>
+        </article>
+        {% empty %}
+        <!-- no entries -->
+        {% endfor %}
+
+    </div>
+</body>
