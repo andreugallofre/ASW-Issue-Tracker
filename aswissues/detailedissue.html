@@ -72,19 +72,32 @@
             </div>
 
             <div class="col-4">
-                <!-- dropdown for the statuses -->
-                <div class="row-8">
-                    <div class="dropdown mb-4">
-                        <a class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Status
-                        </a>
+                <div class="row-8 mb-4">
+                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
 
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Status
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <a class="dropdown-item" href="#">Dropdown link</a>
+                                <a class="dropdown-item" href="#">Dropdown link</a>
+                            </div>
                         </div>
+
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                More
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <a class="dropdown-item" href="#">Add Attachment</a>
+                                <a class="dropdown-item" href="#">Delete Issue</a>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary">Edit</button>
+
                     </div>
                 </div>
 
