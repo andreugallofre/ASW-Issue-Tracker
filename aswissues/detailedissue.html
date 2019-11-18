@@ -6,33 +6,40 @@
         crossorigin="anonymous"></script>
     {% load crispy_forms_tags %}
 
-    <!-- Issue details -->
-    <b>Issues:</b>
-    <table class="table table-striped">
-        <tr>
-            <th>Títol</th>
-            <th>Tipus</th>
-            <th>Prioritat</th>
-        </tr>
-        <tr>
-            <td>{{ object.titol }}</td>
-            <td>{{ object.tipus }}</td>
-            <td>{{ object.prioritat }}</td>
-        </tr>
-        </tr>
-    </table>
+    <div class="container mt-4">
+        <!-- Issue details -->
+        <b>Issue #{{ object.id}} </b> {{ object.tipus}} </br>
+        <h1>{{ object.titol }}</h1>
+        <p>
+            {{object.descripcio}}
+        </p>
 
-    <!-- Comments form -->
-    <form style="width:70%" action="" method="post">
-        {% csrf_token %}
-        {{ form.file_name }}
-        <div style="text-align:center;">
-            <b> Quina es la teva opinió </b>
-        </div>
-        {{ form|crispy }}
-        <div style="text-align:center;">
-            <input type="submit" value="Comment">
-        </div>
-    </form>
+        <hr class="col-xs-12">
 
-    <!-- put here the rest of comments -->
+        <!-- Comments form -->
+        <h3>Comments ({{object.comment_set.all|length}})</h3>
+        <form style="width:100%" action="" method="post">
+            {% csrf_token %}
+            {{ form.file_name }}
+            {{ form|crispy }}
+            <div style="text-align:center;">
+                <input type="submit" value="Comment">
+            </div>
+        </form>
+
+        <!-- put here the rest of comments -->
+        {% for entry in object.comment_set.all %}
+        <article class="iterable-item" data-comment-id="54516571" data-convert-markup="False" data-content="test">
+            <header>
+                <span class="author author-name">{{entry.owner}}</span>
+            </header>
+            <div class="wiki-content comment-content">
+                <p>{{entry.content}}</p>
+            </div>
+        </article>
+        {% empty %}
+        <!-- no entries -->
+        {% endfor %}
+
+    </div>
+</body>

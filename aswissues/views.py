@@ -109,7 +109,6 @@ class DetailedIssue(CreateView, DetailView):
     form_class = CommentForm
     model = Issue
     template_name = 'detailedissue.html'
-    initial = {'key': 'value'}
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -120,6 +119,3 @@ class DetailedIssue(CreateView, DetailView):
         form.instance.issue = Issue.objects.get(id=1)
         form.instance.owner = User.objects.get(id=1)
         return super(DetailedIssue, self).form_valid(form)
-
-
-
