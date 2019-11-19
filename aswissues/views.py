@@ -122,7 +122,8 @@ class DetailedIssue(CreateView, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # canviar-ho per statuses i no per prioritats!
-        print('testtesttest')
+        uid = 1 #change later for self.request.user...
+        context['current_uid'] = uid
         context['prioritatSelector'] = PrioritatSelector.__members__
         return context
 
@@ -160,4 +161,10 @@ def issue_unvote(request, pk):
 
     Vote.objects.get(voter=usr, issue=issue, type=True)
     url = '/issue/'+str(pk)+'/'
+    return redirect(url)
+
+def delete_comment(request, id, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    url = '/issue/'+str(id)+'/'
     return redirect(url)
