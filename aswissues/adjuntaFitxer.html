@@ -195,7 +195,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Adjunteu fitxer</h5>
-                    <button class="close" data-dismiss="modal">&times;</button>
+                    <form  action="/issue/{{object.id}}" method="get">
+                      <button type="submit" class="close">&times;</button>
+                    </form>
                 </div>
                 <div class="modal-body">
                   <form style="width:100%" action="" method="post" enctype="multipart/form-data">
