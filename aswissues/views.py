@@ -23,7 +23,6 @@ from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 class HomePageView(ListView):
@@ -33,12 +32,6 @@ class HomePageView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-
-
-class Test2(LoginRequiredMixin, CreateView):
-    model = User
-    template_name = 'name.html'
-    fields = ['name', 'email']
 
 
 class Login(View):
@@ -98,7 +91,7 @@ class Register(View):
             return render(request, self.template_name, {'form': form})
 
 
-class NewIssue(LoginRequiredMixin, CreateView):
+class NewIssue(CreateView):
     form_class = NovaIssueForm
     model = Issue
     template_name = 'name.html'
@@ -121,7 +114,7 @@ def EditarIssue(request, id):
         return redirect('issueDetall', pk=id)
     return render(request, 'edit.html', {'form': form})
 
-class AttachIssue(LoginRequiredMixin, CreateView, DetailView):
+class AttachIssue(CreateView, DetailView):
     form_class = NovaAttachmentForm
     model = Issue
     template_name = 'adjuntaFitxer.html'
@@ -168,7 +161,7 @@ class AttachIssue(LoginRequiredMixin, CreateView, DetailView):
 
 
 # DJANGO DETAILED VIEW
-class DetailedIssue(LoginRequiredMixin, CreateView, DetailView):
+class DetailedIssue(CreateView, DetailView):
     form_class = CommentForm
     model = Issue
     template_name = 'detailedissue.html'
