@@ -114,7 +114,7 @@ class DetailedIssue(CreateView, DetailView):
     form_class = CommentForm
     model = Issue
     template_name = 'detailedissue.html'
-    success_url = ''
+    success_url = '/issue/1/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -126,4 +126,6 @@ class DetailedIssue(CreateView, DetailView):
         form.instance.data_creacio = date.today()
         form.instance.issue = Issue.objects.get(id=1)
         form.instance.owner = User.objects.get(id=1)
-        return super(DetailedIssue, self).form_valid(form)
+        # en aquest super es on hauriem de fer el redirect!
+        #return super(DetailedIssue, self).form_valid(form)
+        return super().form_valid(form)
