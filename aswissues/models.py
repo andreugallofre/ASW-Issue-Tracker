@@ -1,28 +1,38 @@
 from django.db import models
-from .enums import TipusSelector, PrioritatSelector
+from .enums import TipusSelector, PrioritatSelector, StatusSelector
+
 
 class User(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
 
+
 class Issue(models.Model):
     titol = models.CharField(max_length=200)
     descripcio = models.TextField()
     data_creacio = models.DateField()
-    creator = models.ForeignKey(User, related_name='Creator',  on_delete=models.CASCADE)
-    assignee = models.ForeignKey(User, related_name='Assignee', on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, related_name='Creator',
+                                on_delete=models.CASCADE)
+    assignee = models.ForeignKey(User, related_name='Assignee',
+                                 on_delete=models.CASCADE)
     watchers = models.ManyToManyField(User)
     tipus = models.CharField(
       max_length=20,
-      choices=[(tag.name, tag.value) for tag in TipusSelector],  # Choices is a list of Tuple
+      choices=[(tag.name, tag.value) for tag in TipusSelector],
       default=TipusSelector.Millora
     )
     prioritat = models.CharField(
       max_length=20,
-      choices=[(tag.name, tag.value) for tag in PrioritatSelector],  # Choices is a list of Tuple
+      choices=[(tag.name, tag.value) for tag in PrioritatSelector],
       default=PrioritatSelector.Trivial
     )
     adjunt = models.FileField(blank=True)
+    status = models.CharField(
+      max_length=20,
+      choices=[(tag.name, tag.value) for tag in StatusSelector],
+      default=StatusSelector.Obert
+    )
+
 
 class Comment(models.Model):
     content = models.TextField()
