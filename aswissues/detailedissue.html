@@ -46,7 +46,7 @@
                 <h1>{{ object.titol }}</h1>
                 <!-- Issue info -->
                 <p>
-                    <b>{{object.creator.name}}</b> created an issue on {{object.data_creacio}}
+                    <b>{{object.creator.username}}</b> created an issue on {{object.data_creacio}}
                 </p>
                 <!-- Issue content -->
                 <p>
@@ -73,7 +73,7 @@
                 <article class="iterable-item" data-comment-id="54516571" data-convert-markup="False"
                     data-content="test">
                     <header>
-                        <span class="author author-name"><b>{{entry.owner.name}}</b></span>
+                        <span class="author author-name"><b>{{entry.owner.username}}</b></span>
                     </header>
                     <div class="wiki-content comment-content">
                       <p>{{entry.content}}</p>
@@ -141,7 +141,7 @@
                     <div style="border: thin solid #d0d0d0">
                         <dl>
                             <dt>Assignat</dt>
-                            <dd>{{object.assignee.name}}</dd>
+                            <dd>{{object.assignee.username}}</dd>
                         </dl>
                         <dl>
                             <dt>Tipus</dt>
