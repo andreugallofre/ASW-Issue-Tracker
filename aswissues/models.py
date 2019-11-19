@@ -33,11 +33,7 @@ class Issue(models.Model):
     )
 
 
-class Comment(models.Model):
-    content = models.TextField()
-    data_creacio = models.DateField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
+
 
 
 class Attachment(models.Model):
@@ -45,6 +41,17 @@ class Attachment(models.Model):
     data_creacio = models.DateField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     data = models.FileField()
+
+class Comment(models.Model):
+    content = models.TextField()
+    data_creacio = models.DateField()
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
+    adjunt = models.ForeignKey(Attachment,on_delete=models.CASCADE,null=True)
+    @classmethod
+    def create(cls, owner,issue,data,adjunt):
+        comment = cls(owner=owner,issue=issue,data_creacio=data,adjunt=adjunt)
+        return comment
 
 
 class Vote(models.Model):

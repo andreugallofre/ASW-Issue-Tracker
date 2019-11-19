@@ -156,6 +156,9 @@ class AttachIssue(CreateView, DetailView):
         #do better
         form.instance.owner = User.objects.get(id=1)
         nissue = form.save()
+        comment = Comment.create(nissue.owner,nissue.issue,nissue.data_creacio,nissue)
+        comment.content = "S'ha adjuntat un nou fitxer:"
+        comment.save()
         return redirect('issueDetall', pk=issueID)
         #return super().form_valid(form)
 
