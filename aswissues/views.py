@@ -6,7 +6,8 @@ from aswissues import forms
 # from flask import Flask, render_template, request
 from datetime import date
 from .forms import NovaIssueForm, LoginForm, RegisterForm, NovaAttachmentForm, CommentForm, EditIssueForm
-from .models import Issue, User, Comment, Vote
+from .models import Issue, Comment, Vote
+from social_django import models as oauth_models
 from .multiple_form import MultipleFormsView
 from .enums import PrioritatSelector
 
@@ -14,7 +15,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
-
+from django.contrib import auth
 
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView
@@ -99,8 +100,8 @@ class NewIssue(CreateView):
 
     def form_valid(self, form):
         form.instance.data_creacio = date.today()
-        form.instance.assignee_id = 1
-        form.instance.creator_id = 1
+        form.instance.assignee_id = self.request.user.id
+        form.instance.creator_id = self.request.user.id
         nissue = form.save()
         return redirect('issueDetall', pk=nissue.pk)
 
@@ -124,9 +125,9 @@ class AttachIssue(CreateView, DetailView):
         context = super().get_context_data(**kwargs)
         # canviar-ho per statuses i no per prioritats-!
         # getting user id to know which comments are their own and stuff
-        uid = 1 #change later for self.request.user...
-        user = User.objects.get(id=uid)
-        context['current_uid'] = uid
+        
+        user = self.request.user.id
+        context['current_uid'] = user
 
         # checking if the user voted the issue
         url = self.request.path
@@ -135,7 +136,7 @@ class AttachIssue(CreateView, DetailView):
         issueID = urlSplit[len(urlSplit)-2]
         issue = Issue.objects.get(id=issueID)
 
-        v = Vote.objects.all().filter(voter=user, issue = issue)
+        v = Vote.objects.all().filter(voter=user, issue=issue)
         context['vote'] = not v.exists()
 
         # checking if the user is watching the issue
@@ -153,10 +154,10 @@ class AttachIssue(CreateView, DetailView):
         issueID = urlSplit[len(urlSplit)-2]
         # issue binding
         form.instance.issue = Issue.objects.get(id=issueID)
-        #do better
-        form.instance.owner = User.objects.get(id=1)
+        # do better
+        form.instance.owner = self.request.user
         nissue = form.save()
-        comment = Comment.create(nissue.owner,nissue.issue,nissue.data_creacio,nissue)
+        comment = Comment.create(nissue.owner, nissue.issue, nissue.data_creacio, nissue)
         comment.content = "S'ha adjuntat un nou fitxer:"
         comment.save()
         return redirect('issueDetall', pk=issueID)
@@ -174,9 +175,8 @@ class DetailedIssue(CreateView, DetailView):
         context = super().get_context_data(**kwargs)
         # canviar-ho per statuses i no per prioritats!
         # getting user id to know which comments are their own and stuff
-        uid = 1 #change later for self.request.user...
-        user = User.objects.get(id=uid)
-        context['current_uid'] = uid
+        user = self.request.user.id
+        context['current_uid'] = user
 
         # checking if the user voted the issue
         url = self.request.path
@@ -204,19 +204,19 @@ class DetailedIssue(CreateView, DetailView):
         # issue binding
         form.instance.issue = Issue.objects.get(id=issueID)
         #do better
-        form.instance.owner = User.objects.get(id=1)
+        form.instance.owner = self.request.user
         return super().form_valid(form)
 
 def issue_vote(request, pk):
     issue = get_object_or_404(Issue, pk=pk)
-    usr = User.objects.get(id=1)
+    usr = request.user
     Vote.objects.create(voter=usr, issue=issue, type=True)
     url = '/issue/'+str(pk)+'/'
     return redirect(url)
 
 def issue_unvote(request, pk):
     issue = get_object_or_404(Issue, pk=pk)
-    usr = User.objects.get(id=1)
+    usr = request.user
     v = Vote.objects.all().filter(voter=usr, issue = issue)
     v.delete()
     url = '/issue/'+str(pk)+'/'
@@ -224,14 +224,14 @@ def issue_unvote(request, pk):
 
 def issue_watch(request, pk):
     issue = get_object_or_404(Issue, pk=pk)
-    usr = User.objects.get(id=1)
+    usr = request.user
     Watch.objects.create(voter=usr, issue=issue, type=True)
     url = '/issue/'+str(pk)+'/'
     return redirect(url)
 
 def issue_unwatch(request, pk):
     issue = get_object_or_404(Issue, pk=pk)
-    usr = User.objects.get(id=1)
+    usr = request.user
     Watch.objects.create(voter=usr, issue=issue, type=True)
     url = '/issue/'+str(pk)+'/'
     return redirect(url)

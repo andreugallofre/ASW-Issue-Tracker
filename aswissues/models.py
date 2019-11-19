@@ -1,4 +1,5 @@
 from django.db import models
+from social_django import models as oauth_models
 from .enums import TipusSelector, PrioritatSelector, StatusSelector
 
 
@@ -11,10 +12,8 @@ class Issue(models.Model):
     titol = models.CharField(max_length=200)
     descripcio = models.TextField()
     data_creacio = models.DateField()
-    creator = models.ForeignKey(User, related_name='Creator',
-                                on_delete=models.CASCADE)
-    assignee = models.ForeignKey(User, related_name='Assignee',
-                                 on_delete=models.CASCADE)
+    creator = models.ForeignKey(oauth_models.USER_MODEL, related_name='Creator', on_delete=models.CASCADE)
+    assignee = models.ForeignKey(oauth_models.USER_MODEL, related_name='Assignee', on_delete=models.CASCADE)
     tipus = models.CharField(
       max_length=20,
       choices=[(tag.name, tag.value) for tag in TipusSelector],
@@ -32,20 +31,16 @@ class Issue(models.Model):
       default=StatusSelector.Obert
     )
 
-
-
-
-
 class Attachment(models.Model):
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
     data_creacio = models.DateField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(oauth_models.USER_MODEL, on_delete=models.CASCADE)
     data = models.FileField()
 
 class Comment(models.Model):
     content = models.TextField()
     data_creacio = models.DateField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(oauth_models.USER_MODEL, on_delete=models.CASCADE)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
     adjunt = models.ForeignKey(Attachment,on_delete=models.CASCADE,null=True)
     @classmethod
@@ -55,12 +50,12 @@ class Comment(models.Model):
 
 
 class Vote(models.Model):
-    voter = models.ForeignKey(User, on_delete=models.CASCADE)
+    voter = models.ForeignKey(oauth_models.USER_MODEL, on_delete=models.CASCADE)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
     type = models.BooleanField()
 
 
 class Watch(models.Model):
-    watcher = models.ForeignKey(User, on_delete=models.CASCADE)
+    watcher = models.ForeignKey(oauth_models.USER_MODEL, on_delete=models.CASCADE)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
     type = models.BooleanField()

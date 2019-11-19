@@ -38,7 +38,7 @@ urlpatterns = [
     path('issue/<slug:pk>/unvote', issue_unvote, name='issue_unvote'),
     path('issue/<slug:pk>/watch', issue_watch, name='issue_watch'),
     path('issue/<slug:id>/comment/delete/<slug:pk>', delete_comment, name='delete_comment'),
-    path('auth/', include(('social_django.urls', 'social_django'), namespace='social')),
+    path('auth/', include(('social_django.urls', 'social_django'), namespace='social_auth')),
     url(r'^$', HomePageView.as_view(), name='home'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
