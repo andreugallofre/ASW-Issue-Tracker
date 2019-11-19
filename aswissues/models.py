@@ -15,7 +15,6 @@ class Issue(models.Model):
                                 on_delete=models.CASCADE)
     assignee = models.ForeignKey(User, related_name='Assignee',
                                  on_delete=models.CASCADE)
-    watchers = models.ManyToManyField(User)
     tipus = models.CharField(
       max_length=20,
       choices=[(tag.name, tag.value) for tag in TipusSelector],
@@ -58,5 +57,11 @@ class Comment(models.Model):
         return book
 class Vote(models.Model):
     voter = models.ForeignKey(User, on_delete=models.CASCADE)
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
+    type = models.BooleanField()
+
+
+class Watch(models.Model):
+    watcher = models.ForeignKey(User, on_delete=models.CASCADE)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
     type = models.BooleanField()
