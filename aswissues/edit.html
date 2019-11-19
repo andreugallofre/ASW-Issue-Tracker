@@ -4,17 +4,20 @@
 {% load crispy_forms_tags %}
 <div class="container mt-4">
 
-    <form  action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.file_name }}
-        <div style="text-align:center;">
-          <b> Nova Issue </b>
-        </div>
-            {{ form|crispy }}
-        <div style="text-align:center;">
-          <input type="submit" value="Crea l'issue">
-        </div>
+
+            <form action="" method="post"">
+                {% csrf_token %}
+                {{ form.file_name }}
+                <div style="text-align:center;">
+                  <b> Editeu l'Issue </b>
+                </div>
+                    {{ form|crispy }}
+                <div style="text-align:center;">
+                  <input type="submit" value="Editeu l'issue">
+                </div>
 
 
-    </form>
+            </form>
+
+
 </div>
