@@ -15,6 +15,11 @@ class NovaIssueForm(forms.ModelForm):
         model = Issue
         fields = ['titol', 'descripcio', 'tipus', 'prioritat','adjunt']
 
+class EditIssueForm(forms.ModelForm):
+    class Meta:
+        model = Issue
+        fields = ['titol', 'descripcio', 'tipus', 'prioritat']
+
 class MultipleForm(forms.Form):
     action = forms.CharField(max_length=60, widget=forms.HiddenInput())
 
@@ -43,4 +48,3 @@ class NewIssueForm(forms.Form):
 
 class NovaAttachmentForm(forms.Form):
     Fitxer =  forms.FileField()
-
