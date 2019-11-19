@@ -76,7 +76,37 @@
                         <span class="author author-name"><b>{{entry.owner.name}}</b></span>
                     </header>
                     <div class="wiki-content comment-content">
-                        <p>{{entry.content}}</p>
+                      <p>{{entry.content}}</p>
+                    </div>
+                    <div id="comments-actions-menu">
+                        <ul class="comment-actions">
+                            <!-- user-only visible content-->
+                            {% if entry.owner.id and current_uid%}
+                            <li><a onclick="return confirm('Are you sure you want to delete?')"
+                                    href="comment/delete/{{entry.id}}">Delete</a></li>
+                            <li><a href="comment/edit/{{entry.id}}">Edit</a></li>
+                            {% endif %}
+                            <!-- public content-->
+                            <li>{{entry.data_creacio}}</li>
+                        </ul>
+                    </div>
+
+                </article>
+                <hr class="col-xs-12">
+                {% empty %}
+                <!-- no entries -->
+                {% endfor %}
+
+
+                <!-- aquí hi van els atachments creats per l'usuari -->
+                {% for entry in object.attachment_set.all %}
+                <article class="iterable-item" data-comment-id="54516571" data-convert-markup="False"
+                    data-content="test">
+                    <header>
+                        <span class="author author-name"><b>{{entry.owner.name}}</b></span>
+                    </header>
+                    <div class="wiki-content comment-content">
+                      <a class="attachment" href="{{ MEDIA_URL }}/media/{{entry.data}}">{{entry.data}}</a>
                     </div>
                     <div id="comments-actions-menu">
                         <ul class="comment-actions">
