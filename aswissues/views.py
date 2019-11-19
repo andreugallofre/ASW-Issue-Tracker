@@ -21,18 +21,23 @@ from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
-
+from django_tables2 import SingleTableView
+from .tables import IssueTable
 
 
 # Create your views here.
-class HomePageView(ListView):
+class HomePageView(SingleTableView):
     model = Issue
+    table_class = IssueTable
     template_name = 'homepage.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
 
+    def get_queryset(self):
+        qs = super(HomePageView, self).get_queryset()
+        return list(qs)
 
 class Test2(CreateView):
     model = User

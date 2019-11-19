@@ -1,3 +1,4 @@
+{%load render_table from django_tables2 %}
 <html>
       <head>
           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -24,29 +25,47 @@
           .button:hover {
             background-color: blue;
           }
+
+          .active, .btn:hover {
+          background-color: #666;
+          color: white;
+          }         
           </style>
               <h1>Issue Tracker</h1>
               <div style='float: right;'><a href="login">Iniciar Sessió</a></div>
           <form action="issue">
               <button class="button">Nova Issue</button>
           </form>
+          
+          <div id="myBtnContainer"> Filtrar per:
+              <button class="btn active" onclick="filterSelection('all')"> Totes</button>
+              <button class="btn" onclick="filterSelection('open')"> Obertes</button>
+              <button class="btn" onclick="filterSelection('myissues')"> Les meves issues</button>
+              <button class="btn" onclick="filterSelection('watching')"> Observant</button>
+          </div>
 
           <b>Issues:</b>
-          <table class="table table-striped">
-            <tr>
-              <th>Títol</th>
-              <th>Tipus</th>
-              <th>Prioritat</th>
-            </tr>
-            {% for issue in object_list %}
-            <tr>
-              <td>{{ issue.titol }}</td>
-              <td>{{ issue.tipus }}</td>
-              <td>{{ issue.prioritat }}</td>
-            </tr>
-            </tr>
-            {% empty %}
-            {% endfor %}
+          <table class="table table-hover">
+            <head>
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+            </head>
+          <tbody>
+            {% render_table table %}
+          </tbody>
+
           </table>
+
+          <script>
+            // Marcar com a actiu el botó apretat
+            var btnContainer = document.getElementById("myBtnContainer");
+            var btns = btnContainer.getElementsByClassName("btn");
+            for (var i = 0; i < btns.length; i++) {
+              btns[i].addEventListener("click", function(){
+                var current = document.getElementsByClassName("active");
+                current[0].className = current[0].className.replace(" active", "");
+                this.className += " active";
+              });
+            }
+          </script>
       </body>
 </html>
