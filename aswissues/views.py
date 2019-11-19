@@ -112,19 +112,6 @@ class NewIssue(CreateView):
         return redirect('issueDetall', pk=nissue.pk)
 
         #return super(NewIssue, self).form_valid(form)
-'''
- class EditarIssue(CreateView):
-    form_class = NovaIssueForm
-    model = Issue
-    template_name = 'name.html'
-
-    def form_valid(self, form):
-        #form.instance.data_creacio = date.today()
-        #form.instance.assignee_id = 1
-        #form.instance.creator_id = 1
-        nissue = form.save()
-        return redirect('issueDetall', pk=nissue.pk)
-'''
 def EditarIssue(request, id):
     form_class = EditIssueForm
     instance = get_object_or_404(Issue, id=id)
