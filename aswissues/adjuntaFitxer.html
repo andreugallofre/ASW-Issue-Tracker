@@ -1,11 +1,27 @@
-<body bgcolor="#E6E6FA">
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     {% load crispy_forms_tags %}
+    <script>
 
+        $(document).ready(function(){
+
+            $("#response").modal('show');
+
+        });
+
+        </script>
+        </head>
+        <body bgcolor="#E6E6FA">
     <style>
         dl {
             width: 100%;
@@ -58,7 +74,7 @@
 
                 <hr class="col-xs-12">
                 <!-- Comments form -->
-                <h3>Comentaris ({{object.comment_set.all|length}})</h3>
+                <!-- <h3>Comentaris ({{object.comment_set.all|length}})</h3>
                 <form style="width:100%" action="" method="post">
                     {% csrf_token %}
                     {{ form.file_name }}
@@ -66,7 +82,7 @@
                     <div style="text-align:center;">
                         <input type="submit" value="Comenteu">
                     </div>
-                </form>
+                </form> -->
 
                 <!-- put here the rest of comments -->
                 {% for entry in object.comment_set.all %}
@@ -76,37 +92,7 @@
                         <span class="author author-name"><b>{{entry.owner.name}}</b></span>
                     </header>
                     <div class="wiki-content comment-content">
-                      <p>{{entry.content}}</p>
-                    </div>
-                    <div id="comments-actions-menu">
-                        <ul class="comment-actions">
-                            <!-- user-only visible content-->
-                            {% if entry.owner.id and current_uid%}
-                            <li><a onclick="return confirm('Are you sure you want to delete?')"
-                                    href="comment/delete/{{entry.id}}">Delete</a></li>
-                            <li><a href="comment/edit/{{entry.id}}">Edit</a></li>
-                            {% endif %}
-                            <!-- public content-->
-                            <li>{{entry.data_creacio}}</li>
-                        </ul>
-                    </div>
-
-                </article>
-                <hr class="col-xs-12">
-                {% empty %}
-                <!-- no entries -->
-                {% endfor %}
-
-
-                <!-- aquí hi van els atachments creats per l'usuari -->
-                {% for entry in object.attachment_set.all %}
-                <article class="iterable-item" data-comment-id="54516571" data-convert-markup="False"
-                    data-content="test">
-                    <header>
-                        <span class="author author-name"><b>{{entry.owner.name}}</b></span>
-                    </header>
-                    <div class="wiki-content comment-content">
-                      <a class="attachment" href="{{ MEDIA_URL }}/media/{{entry.data}}">{{entry.data}}</a>
+                        <p>{{entry.content}}</p>
                     </div>
                     <div id="comments-actions-menu">
                         <ul class="comment-actions">
@@ -151,7 +137,7 @@
                                 Més
                             </button>
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                <a class="dropdown-item" href="/attach/{{ object.id}}">Adjunteu fitxer</a>
+                                <a class="dropdown-item" href="attach">Adjunteu fitxer</a>
                                 <a class="dropdown-item" href="#">Esborreu l'issue</a>
                             </div>
                         </div>
@@ -204,6 +190,31 @@
             </div>
         </div>
     </div>
+    <div class="modal hide fade in" id="response" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adjunteu fitxer</h5>
+                    <form  action="/issue/{{object.id}}" method="get">
+                      <button type="submit" class="close">&times;</button>
+                    </form>
+                </div>
+                <div class="modal-body">
+                  <form style="width:100%" action="" method="post" enctype="multipart/form-data">
+                    <div class="list-group">
+                        <div class="d-flex w-100 justify-content-between">
+
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Adjunta" id="submit" name="submit" class="btn btn-primary">
+                    </div>
+                      </form>
+                </div>
+            </div>
+        </div>
 
 
         <!-- needed for the dropdown menu -->

@@ -33,6 +33,8 @@ class Comment(models.Model):
 
 class Attachment(models.Model):
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
+    data_creacio = models.DateField()
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     data = models.FileField()
 
 
@@ -40,4 +42,3 @@ class Vote(models.Model):
     voter = models.ForeignKey(User, on_delete=models.CASCADE)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
     type = models.BooleanField()
-

@@ -18,13 +18,14 @@ from django.conf import settings
 from django.urls import path, include
 from django.conf.urls import url
 from django.conf.urls.static import static
-from aswissues.views import NewIssue, Login, Register, HomePageView, Test2, DetailedIssue, issue_vote, issue_unvote, issue_watch, delete_comment, EditarIssue
+from aswissues.views import NewIssue, Login, Register, HomePageView, Test2, DetailedIssue, issue_vote, issue_unvote, issue_watch, delete_comment, EditarIssue, AttachIssue
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('issue/<slug:pk>/', DetailedIssue.as_view(), name = "issueDetall"),
     path('issue/', NewIssue.as_view()),
     path('login/', Login.as_view()),
+    path('attach/<slug:pk>/', AttachIssue.as_view(), name = "fitxerAdjunt"),
     path('register/', Register.as_view()),
     path('edit/<slug:id>/', EditarIssue,name='EditarIssue'),
     path('test2/', Test2.as_view(success_url="/")),

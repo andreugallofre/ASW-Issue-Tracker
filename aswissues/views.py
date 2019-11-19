@@ -121,6 +121,51 @@ def EditarIssue(request, id):
         return redirect('issueDetall', pk=id)
     return render(request, 'edit.html', {'form': form})
 
+class AttachIssue(CreateView, DetailView):
+    form_class = NovaAttachmentForm
+    model = Issue
+    template_name = 'adjuntaFitxer.html'
+    success_url = ''
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # canviar-ho per statuses i no per prioritats-!
+        # getting user id to know which comments are their own and stuff
+        uid = 1 #change later for self.request.user...
+        user = User.objects.get(id=uid)
+        context['current_uid'] = uid
+
+        # checking if the user voted the issue
+        url = self.request.path
+        urlSplit = url.split("/")
+
+        issueID = urlSplit[len(urlSplit)-2]
+        issue = Issue.objects.get(id=issueID)
+
+        v = Vote.objects.all().filter(voter=user, issue = issue)
+        context['vote'] = not v.exists()
+
+        # checking if the user is watching the issue
+        context['watch'] = True
+        context['prioritatSelector'] = PrioritatSelector.__members__
+        return context
+
+    def form_valid(self, form):
+        form.instance.data_creacio = date.today()
+        url = self.request.path
+        # set success url according to our current one
+        self.success_url = url
+        # get issue id to bind it to the comment
+        urlSplit = url.split("/")
+        issueID = urlSplit[len(urlSplit)-2]
+        # issue binding
+        form.instance.issue = Issue.objects.get(id=issueID)
+        #do better
+        form.instance.owner = User.objects.get(id=1)
+        nissue = form.save()
+        return redirect('issueDetall', pk=issueID)
+        #return super().form_valid(form)
+
 
 # DJANGO DETAILED VIEW
 class DetailedIssue(CreateView, DetailView):
