@@ -12,8 +12,9 @@ from .enums import PrioritatSelector
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template import loader
+
 
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView
@@ -106,7 +107,10 @@ class NewIssue(CreateView):
         form.instance.data_creacio = date.today()
         form.instance.assignee_id = 1
         form.instance.creator_id = 1
-        return super(NewIssue, self).form_valid(form)
+        nissue = form.save()
+        return redirect('issueDetall', pk=nissue.pk)
+
+        #return super(NewIssue, self).form_valid(form)
 
 # DJANGO DETAILED VIEW
 #afegir a urls
