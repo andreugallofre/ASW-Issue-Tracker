@@ -44,6 +44,11 @@
                 <!-- Issue details -->
                 <b>Issue #{{ object.id}} </b> {{ object.tipus}} </br>
                 <h1>{{ object.titol }}</h1>
+                <!-- Issue info -->
+                <p>
+                    <b>{{object.creator.name}}</b> created an issue on {{object.data_creacio}}
+                </p>
+                <!-- Issue content -->
                 <p>
                     {{object.descripcio}}
                     <div>
