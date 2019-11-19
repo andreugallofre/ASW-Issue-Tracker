@@ -113,22 +113,27 @@ class NewIssue(CreateView):
         #return super(NewIssue, self).form_valid(form)
 
 # DJANGO DETAILED VIEW
-#afegir a urls
 class DetailedIssue(CreateView, DetailView):
     form_class = CommentForm
     model = Issue
     template_name = 'detailedissue.html'
-    success_url = '/issue/1/'
+    success_url = ''
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # canviar-ho per statuses i no per prioritats!
+        print('testtesttest')
         context['prioritatSelector'] = PrioritatSelector.__members__
         return context
 
     def form_valid(self, form):
         form.instance.data_creacio = date.today()
-        form.instance.issue = Issue.objects.get(id=1)
+        url = self.request.path
+        self.success_url = url
+        urlSplit = url.split("/")
+        issueID = urlSplit[len(urlSplit)-2]
+        form.instance.issue = Issue.objects.get(id=issueID)
+        
         form.instance.owner = User.objects.get(id=1)
         # en aquest super es on hauriem de fer el redirect!
         #return super(DetailedIssue, self).form_valid(form)
