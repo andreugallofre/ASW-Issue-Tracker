@@ -122,8 +122,23 @@ class DetailedIssue(CreateView, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # canviar-ho per statuses i no per prioritats!
+        # getting user id to know which comments are their own and stuff
         uid = 1 #change later for self.request.user...
+        user = User.objects.get(id=uid)
         context['current_uid'] = uid
+
+        # checking if the user voted the issue
+        url = self.request.path
+        urlSplit = url.split("/")
+        
+        issueID = urlSplit[len(urlSplit)-2]
+        issue = Issue.objects.get(id=issueID)
+        
+        v = Vote.objects.all().filter(voter=user, issue = issue)
+        context['vote'] = not v.exists()
+
+        # checking if the user is watching the issue
+        context['watch'] = True
         context['prioritatSelector'] = PrioritatSelector.__members__
         return context
 
@@ -148,6 +163,14 @@ def issue_vote(request, pk):
     url = '/issue/'+str(pk)+'/'
     return redirect(url)
 
+def issue_unvote(request, pk):
+    issue = get_object_or_404(Issue, pk=pk) 
+    usr = User.objects.get(id=1)
+    v = Vote.objects.all().filter(voter=usr, issue = issue)
+    v.delete()
+    url = '/issue/'+str(pk)+'/'
+    return redirect(url)
+
 def issue_watch(request, pk):
     issue = get_object_or_404(Issue, pk=pk) 
     usr = User.objects.get(id=1)
@@ -155,11 +178,10 @@ def issue_watch(request, pk):
     url = '/issue/'+str(pk)+'/'
     return redirect(url)
 
-def issue_unvote(request, pk):
+def issue_unwatch(request, pk):
     issue = get_object_or_404(Issue, pk=pk) 
     usr = User.objects.get(id=1)
-
-    Vote.objects.get(voter=usr, issue=issue, type=True)
+    Watch.objects.create(voter=usr, issue=issue, type=True)
     url = '/issue/'+str(pk)+'/'
     return redirect(url)
 

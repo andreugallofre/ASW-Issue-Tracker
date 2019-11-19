@@ -151,7 +151,12 @@
                         <dl>
                             <dt>Votes</dt>
                             <dd>
-                                <a href="vote">Vote for this issue</a>
+                                {% if vote %}
+                                <a href="vote">Vote</a>
+                                {% endif %}
+                                {% if not vote %}
+                                <a href="unvote">Unvote</a>
+                                {% endif %}
                             </dd>
 
                         </dl>
