@@ -117,39 +117,42 @@
                         <div class="btn-group" role="group">
                             <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                More
+                                Més
                             </button>
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                <a class="dropdown-item" href="#">Add Attachment</a>
-                                <a class="dropdown-item" href="#">Delete Issue</a>
+                                <a class="dropdown-item" href="#response" data-toggle="modal"
+                                    data-target="#response">Adjunteu fitxer</a>
+                                <a class="dropdown-item" href="#">Esborreu l'issue</a>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-secondary">Edit</button>
+                        <button type="button" class="btn btn-secondary">Editar</button>
 
                     </div>
                 </div>
+
+
 
                 <!-- Issue Information -->
                 <div class="row-8">
                     <div style="border: thin solid #d0d0d0">
                         <dl>
-                            <dt>Assignee</dt>
+                            <dt>Assignat</dt>
                             <dd>{{object.assignee.name}}</dd>
                         </dl>
                         <dl>
-                            <dt>Type</dt>
+                            <dt>Tipus</dt>
                             <dd>{{object.tipus}}</dd>
                         </dl>
                         <dl>
-                            <dt>Priority</dt>
+                            <dt>Prioritat</dt>
                             <dd>{{object.prioritat}}</dd>
                         </dl>
                         <dl>
-                            <dt>Status</dt>
+                            <dt>Estat</dt>
                             <dd>{{object.status}}</dd>
                         </dl>
                         <dl>
-                            <dt>Votes</dt>
+                            <dt>Vots</dt>
                             <dd>
                                 {% if vote %}
                                 <a href="vote">Vote</a>
@@ -162,7 +165,7 @@
                         </dl>
                         <dl>
                             <dt>Watchers</dt>
-                            <dd><a href="watch">Watch this issue</a></dd>
+                            <dd><a href="watch">Segueix aquesta issue</a></dd>
                         </dl>
                     </div>
                 </div>
@@ -170,15 +173,36 @@
         </div>
     </div>
 
-    <!-- needed for the dropdown menu -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+    <div class="modal" id="response">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adjunteu fitxer</h5>
+                    <button class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6>Aquí hi va el formulari</h6>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal">Tanca</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- needed for the dropdown menu -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 
 </body>
