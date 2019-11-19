@@ -15,6 +15,11 @@ from django.template import loader
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
+from django.shortcuts import render
+
+
+class Testerino(View):
+    template_name = 'test_login.html'
 
 
 # Create your views here.

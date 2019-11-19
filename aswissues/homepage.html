@@ -25,7 +25,18 @@
             background-color: blue;
           }
           </style>
-              <h1>Issue Tracker</h1>
+          <div class="jumbotron">
+            <h1>Issue Tracker</h1>
+            {% if user.is_authenticated %}
+              <p>Logged as {{ user.username }}</p>
+              <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+              <a class="btn btn-primary" href="{% url 'social:begin' 'google-oauth2' %}">
+                Login
+              </a>
+            {% endif %}
+          </div>
+          {% if user.is_authenticated %}
               <div style='float: right;'><a href="login">Iniciar Sessió</a></div>
           <form action="issue">
               <button class="button">Nova Issue</button>
@@ -48,5 +59,7 @@
             {% empty %}
             {% endfor %}
           </table>
+          {% else %}
+          {% endif %}
       </body>
 </html>
