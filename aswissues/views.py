@@ -6,13 +6,13 @@ from aswissues import forms
 # from flask import Flask, render_template, request
 from datetime import date
 from .forms import NovaIssueForm, LoginForm, RegisterForm, NovaAttachmentForm, CommentForm
-from .models import Issue, User, Comment
+from .models import Issue, User, Comment, Vote
 from .multiple_form import MultipleFormsView
 from .enums import PrioritatSelector
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
 
 
@@ -129,12 +129,35 @@ class DetailedIssue(CreateView, DetailView):
     def form_valid(self, form):
         form.instance.data_creacio = date.today()
         url = self.request.path
+        # set success url according to our current one
         self.success_url = url
+        # get issue id to bind it to the comment
         urlSplit = url.split("/")
         issueID = urlSplit[len(urlSplit)-2]
+        # issue binding
         form.instance.issue = Issue.objects.get(id=issueID)
-        
+        #do better
         form.instance.owner = User.objects.get(id=1)
-        # en aquest super es on hauriem de fer el redirect!
-        #return super(DetailedIssue, self).form_valid(form)
         return super().form_valid(form)
+
+def issue_vote(request, pk):
+    issue = get_object_or_404(Issue, pk=pk) 
+    usr = User.objects.get(id=1)
+    Vote.objects.create(voter=usr, issue=issue, type=True)
+    url = '/issue/'+str(pk)+'/'
+    return redirect(url)
+
+def issue_watch(request, pk):
+    issue = get_object_or_404(Issue, pk=pk) 
+    usr = User.objects.get(id=1)
+    Watch.objects.create(voter=usr, issue=issue, type=True)
+    url = '/issue/'+str(pk)+'/'
+    return redirect(url)
+
+def issue_unvote(request, pk):
+    issue = get_object_or_404(Issue, pk=pk) 
+    usr = User.objects.get(id=1)
+
+    Vote.objects.get(voter=usr, issue=issue, type=True)
+    url = '/issue/'+str(pk)+'/'
+    return redirect(url)
