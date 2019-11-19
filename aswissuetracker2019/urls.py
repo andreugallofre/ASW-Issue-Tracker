@@ -18,7 +18,7 @@ from django.conf import settings
 from django.urls import path, include
 from django.conf.urls import url
 from django.conf.urls.static import static
-from aswissues.views import NewIssue, Login, Register, HomePageView, Test2, DetailedIssue
+from aswissues.views import NewIssue, Login, Register, HomePageView, Test2, DetailedIssue, issue_vote, issue_unvote, issue_watch, delete_comment
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +27,10 @@ urlpatterns = [
     path('login/', Login.as_view()),
     path('register/', Register.as_view()),
     path('test2/', Test2.as_view(success_url="/")),
+    path('issue/<slug:pk>/vote', issue_vote, name='issue_vote'),
+    path('issue/<slug:pk>/unvote', issue_unvote, name='issue_unvote'),
+    path('issue/<slug:pk>/watch', issue_watch, name='issue_watch'),
+    path('issue/<slug:id>/comment/delete/<slug:pk>', delete_comment, name='delete_comment'),
     url(r'^$', HomePageView.as_view(), name='home'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

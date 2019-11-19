@@ -1,13 +1,9 @@
 from django.db import models
 from .enums import TipusSelector, PrioritatSelector
 
-
-
-
 class User(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
-
 
 class Issue(models.Model):
     titol = models.CharField(max_length=200)
@@ -28,8 +24,6 @@ class Issue(models.Model):
     )
     adjunt = models.FileField(blank=True)
 
-
-
 class Comment(models.Model):
     content = models.TextField()
     data_creacio = models.DateField()
@@ -46,3 +40,4 @@ class Vote(models.Model):
     voter = models.ForeignKey(User, on_delete=models.CASCADE)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
     type = models.BooleanField()
+

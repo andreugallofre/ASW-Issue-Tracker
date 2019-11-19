@@ -18,8 +18,6 @@ class NovaIssueForm(forms.ModelForm):
 class MultipleForm(forms.Form):
     action = forms.CharField(max_length=60, widget=forms.HiddenInput())
 
-
-
 class LoginForm(forms.Form):
     nomUsuari = forms.CharField(label='Usuari', max_length=100)
     clauUsuari = forms.CharField(label='Mot de pas',widget=forms.PasswordInput, max_length=100)
@@ -32,8 +30,8 @@ class RegisterForm(forms.Form):
 
 class CommentForm(forms.ModelForm):
     class Meta:
-       model = Comment
-       fields = ['content']
+        model = Comment
+        fields = ['content']
 
 class NewIssueForm(forms.Form):
     titol = forms.CharField(label='Títol', max_length=100)
