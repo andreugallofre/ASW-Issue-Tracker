@@ -10,10 +10,4 @@ class Migration(migrations.Migration):
         ('aswissues', '0008_merge_20191119_2121'),
     ]
 
-    operations = [
-        migrations.AddField(
-            model_name='issue',
-            name='status',
-            field=models.CharField(choices=[('Nou', 'Nou'), ('Obert', 'Obert'), ('Resolt', 'Resolt'), ('Espera', 'En Espera'), ('Invalit', 'Invalit'), ('Duplicat', 'Duplicat'), ('NoFix', 'No fix'), ('Tancat', 'Tancat')], default=aswissues.enums.StatusSelector('Obert'), max_length=20),
-        ),
-    ]
+    operations = []
