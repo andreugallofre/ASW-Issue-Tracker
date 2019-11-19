@@ -6,7 +6,7 @@ from .models import Issue, Attachment, Comment
 class NovaAttachmentForm(forms.ModelForm):
     class Meta:
         model = Attachment
-        fields = ['issue','data']
+        fields = ['data']
 
 
 
@@ -45,6 +45,3 @@ class NewIssueForm(forms.Form):
     tipus = forms.ChoiceField(choices=opcionst)
     opcionsp = (('Trivial', 'Trivial'),('Menor', 'Menor'),('Major', 'Major'),('Crítica', 'Crítica'),('Bloquejant', 'Bloquejant'))
     prioritat = forms.ChoiceField(choices=opcionsp)
-
-class NovaAttachmentForm(forms.Form):
-    Fitxer =  forms.FileField()
