@@ -50,11 +50,10 @@ class Comment(models.Model):
     adjunt = models.ForeignKey(Attachment,on_delete=models.CASCADE,null=True)
     @classmethod
     def create(cls, owner,issue,data,adjunt):
-        book = cls(owner=owner,issue=issue,data_creacio=data,adjunt=adjunt)
+        comment = cls(owner=owner,issue=issue,data_creacio=data,adjunt=adjunt)
+        return comment
 
 
-        # do something with the book
-        return book
 class Vote(models.Model):
     voter = models.ForeignKey(User, on_delete=models.CASCADE)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
