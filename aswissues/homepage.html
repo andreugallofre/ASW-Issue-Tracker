@@ -43,6 +43,14 @@
               <button class="btn" onclick="filterSelection('myissues')"> Les meves issues</button>
               <button class="btn" onclick="filterSelection('watching')"> Observant</button>
           </div>
+          {% if user.is_authenticated %}
+              <div style='float: right;'><a class="btn btn-primary" href="{% url 'logout' %}">Desconectar</a></div>
+              <form action="issue">
+                  <button class="button">Nova Issue</button>
+              </form>
+          {% else %}
+            <div style='float: right;'><a href="{% url 'social:begin' 'google-oauth2' %}">Iniciar Sessió</a></div>
+          {% endif %}
 
           <b>Issues:</b>
           <table class="table table-hover">

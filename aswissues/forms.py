@@ -6,17 +6,24 @@ from .models import Issue, Attachment, Comment
 class NovaAttachmentForm(forms.ModelForm):
     class Meta:
         model = Attachment
-        fields = ['issue','data']
-
+        fields = ['data']
 
 
 class NovaIssueForm(forms.ModelForm):
     class Meta:
         model = Issue
-        fields = ['titol', 'descripcio', 'tipus', 'prioritat','adjunt']
+        fields = ['titol', 'descripcio', 'tipus', 'prioritat', 'adjunt']
+
+
+class EditIssueForm(forms.ModelForm):
+    class Meta:
+        model = Issue
+        fields = ['titol', 'descripcio', 'tipus', 'prioritat']
+
 
 class MultipleForm(forms.Form):
     action = forms.CharField(max_length=60, widget=forms.HiddenInput())
+
 
 class LoginForm(forms.Form):
     nomUsuari = forms.CharField(label='Usuari', max_length=100)
@@ -28,10 +35,12 @@ class RegisterForm(forms.Form):
     clauUsuari = forms.CharField(label='Mot de pas',widget=forms.PasswordInput, max_length=100)
     emailUsuari = forms.EmailField(label='Correu electrònic', max_length=100)
 
+
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
+
 
 class NewIssueForm(forms.Form):
     titol = forms.CharField(label='Títol', max_length=100)
@@ -40,7 +49,3 @@ class NewIssueForm(forms.Form):
     tipus = forms.ChoiceField(choices=opcionst)
     opcionsp = (('Trivial', 'Trivial'),('Menor', 'Menor'),('Major', 'Major'),('Crítica', 'Crítica'),('Bloquejant', 'Bloquejant'))
     prioritat = forms.ChoiceField(choices=opcionsp)
-
-class NovaAttachmentForm(forms.Form):
-    Fitxer =  forms.FileField()
-

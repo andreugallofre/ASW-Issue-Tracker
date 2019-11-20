@@ -13,24 +13,37 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
 from django.conf.urls import url
+from django.conf.urls import include
+from django.contrib.auth import logout
+from aswissues.views import Issue, Login, Register, HomePageView
 from django.conf.urls.static import static
-from aswissues.views import NewIssue, Login, Register, HomePageView, Test2, DetailedIssue, issue_vote, issue_unvote, issue_watch, delete_comment
+from aswissues.views import NewIssue, DetailedIssue, issue_vote, issue_unvote, issue_watch, issue_unwatch, issue_delete, delete_comment, EditarIssue, AttachIssue, update_comment, change_state
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('issue/<slug:pk>/', DetailedIssue.as_view(), name = "issueDetall"),
+    path('issue/<slug:pk>/', DetailedIssue.as_view(), name="issueDetall"),
     path('issue/', NewIssue.as_view()),
     path('login/', Login.as_view()),
+    path('attach/<slug:pk>/', AttachIssue.as_view(), name="fitxerAdjunt"),
     path('register/', Register.as_view()),
-    path('test2/', Test2.as_view(success_url="/")),
+    path('', include('social_django.urls', namespace='social')),
+    path('logout/', include('django.contrib.auth.urls'), name='logout'),
+    path('edit/<slug:id>/', EditarIssue, name='EditarIssue'),
     path('issue/<slug:pk>/vote', issue_vote, name='issue_vote'),
+    path('issue/<slug:id>/chstate/<slug:status>', change_state, name='change_state'),
+    path('issue/<slug:pk>/delete', issue_delete, name='issue_delete'),
     path('issue/<slug:pk>/unvote', issue_unvote, name='issue_unvote'),
     path('issue/<slug:pk>/watch', issue_watch, name='issue_watch'),
+    path('issue/<slug:pk>/unwatch', issue_unwatch, name='issue_unwatch'),
     path('issue/<slug:id>/comment/delete/<slug:pk>', delete_comment, name='delete_comment'),
+    path('issue/<slug:id>/comment/update/<slug:pk>', update_comment, name='update_comment'),
+
+    path('auth/', include(('social_django.urls', 'social_django'), namespace='social_auth')),
     url(r'^$', HomePageView.as_view(), name='home'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

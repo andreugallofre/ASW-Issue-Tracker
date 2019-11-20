@@ -1,11 +1,27 @@
-<body bgcolor="#E6E6FA">
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     {% load crispy_forms_tags %}
+    <script>
 
+        $(document).ready(function(){
+
+            $("#response").modal('show');
+
+        });
+
+        </script>
+        </head>
+        <body bgcolor="#E6E6FA">
     <style>
         dl {
             width: 100%;
@@ -40,15 +56,13 @@
     </style>
     <div class="container mt-4">
         <div class="row">
-
-
             <div class="col-8">
                 <!-- Issue details -->
                 <b>Issue #{{ object.id}} </b> {{ object.tipus}} </br>
                 <h1>{{ object.titol }}</h1>
                 <!-- Issue info -->
                 <p>
-                    <b>{{object.creator.username}}</b> created an issue on {{object.data_creacio}}
+                    <b>{{object.creator.name}}</b> created an issue on {{object.data_creacio}}
                 </p>
                 <!-- Issue content -->
                 <p>
@@ -60,8 +74,7 @@
 
                 <hr class="col-xs-12">
                 <!-- Comments form -->
-                <h3>Comentaris ({{object.comment_set.all|length}})</h3>
-                {% if user.is_authenticated %}
+                <!-- <h3>Comentaris ({{object.comment_set.all|length}})</h3>
                 <form style="width:100%" action="" method="post">
                     {% csrf_token %}
                     {{ form.file_name }}
@@ -69,67 +82,37 @@
                     <div style="text-align:center;">
                         <input type="submit" value="Comenteu">
                     </div>
-                </form>
-                {% endif %}
+                </form> -->
 
                 <!-- put here the rest of comments -->
                 {% for entry in object.comment_set.all %}
                 <article class="iterable-item" data-comment-id="54516571" data-convert-markup="False"
                     data-content="test">
                     <header>
-                        <span class="author author-name"><b>{{entry.owner.username}}</b></span>
+                        <span class="author author-name"><b>{{entry.owner.name}}</b></span>
                     </header>
                     <div class="wiki-content comment-content">
-                        {% autoescape off %}
-                            <p>{{entry.content}}</p>
-                        {% endautoescape %}
-                        <a class="attachment"
-                            href="{{ MEDIA_URL }}/media/{{entry.adjunt.data}}">{{entry.adjunt.data}}</a>
+                        <p>{{entry.content}}</p>
                     </div>
                     <div id="comments-actions-menu">
                         <ul class="comment-actions">
                             <!-- user-only visible content-->
                             {% if entry.owner.id and current_uid%}
                             <li><a onclick="return confirm('Are you sure you want to delete?')"
-                                    href="comment/delete/{{entry.id}}">Esborra</a></li>
-                            <li><button type="button" class="btn btn-link"
-                                    onclick="document.getElementById('divEditComment{{entry.id}}').style.display = 'block';">
-                                    Edita</button>
-                            </li>
+                                    href="comment/delete/{{entry.id}}">Delete</a></li>
+                            <li><a href="comment/edit/{{entry.id}}">Edit</a></li>
                             {% endif %}
                             <!-- public content-->
                             <li>{{entry.data_creacio}}</li>
                         </ul>
                     </div>
-                    <!-- submit edition -->
-                    <div id="divEditComment{{entry.id}}" style="display: none;">
-                        <form method="POST" action="comment/update/{{entry.id}}">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <textarea class="form-control" name="formContent" rows="3">{{entry.content}}</textarea>
-                            </div>
-                            <div class=" btn-group">
-                                <button type="submit" class="btn btn-primary">Edita</button>
-                                </button>
-                                <a onclick="document.getElementById('divEditComment{{entry.id}}').style.display = 'none';"
-                                    id="btnGroup2" type="button" class="btn btn-secondary">
-                                    Cancela
-                                </a>
-                            </div>
-                        </form>
-                    </div>
+
                 </article>
                 <hr class="col-xs-12">
-
                 {% empty %}
                 <!-- no entries -->
                 {% endfor %}
-
-                {% if not user.is_authenticated %}
-                <div><a href="{% url 'social:begin' 'google-oauth2' %}?next={{request.path}}">Inicia sessió per afegir un comentari</a></div>
-                {% endif %}
             </div>
-
 
             <!-- Right menu -->
             <div class="col-4">
@@ -142,8 +125,8 @@
                                 Status
                             </button>
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                {% for i in statusSelector%}
-                                <a class="dropdown-item" href="/issue/{{ object.id }}/chstate/{{ i }}">{{i}}</a>
+                                {% for i in prioritatSelector%}
+                                <a class="dropdown-item" href="#">{{i}}</a>
                                 {% endfor %}
                             </div>
                         </div>
@@ -154,20 +137,17 @@
                                 Més
                             </button>
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                <a class="dropdown-item" href="/attach/{{ object.id}}">Adjunteu fitxer</a>
-                                {% if current_uid and object.creator.id %}
-                                <a onclick="return confirm('Are you sure you want to delete?')" class="dropdown-item"
-                                    href="/issue/{{object.id}}/delete">Esborreu l'issue</a>
-                                {% endif %}
+                                <a class="dropdown-item" href="attach">Adjunteu fitxer</a>
+                                <a class="dropdown-item" href="#">Esborreu l'issue</a>
                             </div>
                         </div>
-                        {% if current_uid and object.creator.id %}
                         <form action='/edit/{{ object.id}}' method='GET'>
-                            <button type="submit" class="btn btn-secondary">Editar</button>
+
+                        <button type="submit" class="btn btn-secondary">Editar</button>
                         </form>
-                        {% endif %}
                     </div>
                 </div>
+
 
 
                 <!-- Issue Information -->
@@ -175,7 +155,7 @@
                     <div style="border: thin solid #d0d0d0">
                         <dl>
                             <dt>Assignat</dt>
-                            <dd>{{object.assignee.username}}</dd>
+                            <dd>{{object.assignee.name}}</dd>
                         </dl>
                         <dl>
                             <dt>Tipus</dt>
@@ -192,7 +172,6 @@
                         <dl>
                             <dt>Vots</dt>
                             <dd>
-                                ({{nvotes}})
                                 {% if vote %}
                                 <a href="vote">Vote</a>
                                 {% endif %}
@@ -204,31 +183,49 @@
                         </dl>
                         <dl>
                             <dt>Watchers</dt>
-                            <dd>
-                                ({{nwatch}})
-                                {% if watch %}
-                                <a href="watch">Watch</a>
-                                {% endif %}
-                                {% if not watch %}
-                                <a href="unwatch">Unwatch</a>
-                                {% endif %}</a></dd>
+                            <dd><a href="watch">Segueix aquesta issue</a></dd>
                         </dl>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal hide fade in" id="response" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adjunteu fitxer</h5>
+                    <form  action="/issue/{{object.id}}" method="get">
+                      <button type="submit" class="close">&times;</button>
+                    </form>
+                </div>
+                <div class="modal-body">
+                  <form style="width:100%" action="" method="post" enctype="multipart/form-data">
+                    <div class="list-group">
+                        <div class="d-flex w-100 justify-content-between">
+
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Adjunta" id="submit" name="submit" class="btn btn-primary">
+                    </div>
+                      </form>
+                </div>
+            </div>
+        </div>
 
 
-    <!-- needed for the dropdown menu -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+        <!-- needed for the dropdown menu -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 
 </body>

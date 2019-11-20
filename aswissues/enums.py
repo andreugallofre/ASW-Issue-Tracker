@@ -14,3 +14,14 @@ class PrioritatSelector(Enum):   # A subclass of Enum
     Major = "Major"
     Critica = "Crítica"
     Bloquejant = "Bloquejant"
+
+
+class StatusSelector(Enum):
+    Nou = "Nou"
+    Obert = "Obert"
+    Resolt = "Resolt"
+    Espera = "En Espera"
+    Invalit = "Invalit"
+    Duplicat = "Duplicat"
+    NoFix = "No fix"
+    Tancat = "Tancat"
