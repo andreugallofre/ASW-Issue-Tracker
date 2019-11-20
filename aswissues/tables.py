@@ -9,7 +9,7 @@ class IssueTable(tables.Table):
     prioritat = tables.TemplateColumn('<a href= "./?prioritat={{record.prioritat}}">{{record.prioritat}}</a>')
     tipus = tables.TemplateColumn('<a href= "./?tipus={{record.tipus}}">{{record.tipus}}</a>')
     status = tables.TemplateColumn('<a href= "./?tipus={{record.status}}">{{record.status}}</a>')
-    #nameCr = tables.TemplateColumn('<a href= "./?creator='+nameC+'">'+nameC+'</a>')
+    # nameCr = tables.TemplateColumn('<a href= "./?creator='+nameC+'">'+nameC+'</a>')
     data_creacio = tables.TemplateColumn('<a href= "./?tidata_creacio={{record.data_creacio}}">{{record.data_creacio}}</a>')
 
     class Meta:

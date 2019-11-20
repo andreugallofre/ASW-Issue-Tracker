@@ -89,7 +89,7 @@
                     <div id="comments-actions-menu">
                         <ul class="comment-actions">
                             <!-- user-only visible content-->
-                            {% if entry.owner.id and current_uid%}
+                            {% if entry.owner.id == current_uid%}
                             <li><a onclick="return confirm('Are you sure you want to delete?')"
                                     href="comment/delete/{{entry.id}}">Esborra</a></li>
                             <li><button type="button" class="btn btn-link"
@@ -161,7 +161,7 @@
                                 {% endif %}
                             </div>
                         </div>
-                        {% if current_uid and object.creator.id %}
+                        {% if current_uid == object.creator.id %}
                         <form action='/edit/{{ object.id}}' method='GET'>
                             <button type="submit" class="btn btn-secondary">Editar</button>
                         </form>
