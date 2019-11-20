@@ -6,7 +6,7 @@ from aswissues import forms
 # from flask import Flask, render_template, request
 from datetime import date
 from .forms import NovaIssueForm, LoginForm, RegisterForm, NovaAttachmentForm, CommentForm, EditIssueForm
-from .models import Issue, Comment, Vote
+from .models import Issue, Comment, Vote, Watch
 from social_django import models as oauth_models
 from .multiple_form import MultipleFormsView
 from .enums import PrioritatSelector
@@ -189,7 +189,8 @@ class DetailedIssue(CreateView, DetailView):
         context['vote'] = not v.exists()
 
         # checking if the user is watching the issue
-        context['watch'] = True
+        w = Watch.objects.all().filter(watcher=user, issue = issue)
+        context['watch'] = not w.exists()
         context['prioritatSelector'] = PrioritatSelector.__members__
         return context
 
@@ -222,17 +223,18 @@ def issue_unvote(request, pk):
     url = '/issue/'+str(pk)+'/'
     return redirect(url)
 
-def issue_watch(request, pk):
-    issue = get_object_or_404(Issue, pk=pk)
-    usr = request.user
-    Watch.objects.create(voter=usr, issue=issue, type=True)
-    url = '/issue/'+str(pk)+'/'
-    return redirect(url)
-
 def issue_unwatch(request, pk):
     issue = get_object_or_404(Issue, pk=pk)
     usr = request.user
-    Watch.objects.create(voter=usr, issue=issue, type=True)
+    w = Watch.objects.all().filter(watcher=usr, issue = issue)
+    w.delete()
+    url = '/issue/'+str(pk)+'/'
+    return redirect(url)
+
+def issue_watch(request, pk):
+    issue = get_object_or_404(Issue, pk=pk)
+    usr = request.user
+    Watch.objects.create(watcher=usr, issue=issue, type=True)
     url = '/issue/'+str(pk)+'/'
     return redirect(url)
 
