@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.safestring import mark_safe
 from .models import Issue, Attachment, Comment
+from crispy_forms.helper import FormHelper
 
 
 class NovaAttachmentForm(forms.ModelForm):
@@ -43,4 +44,9 @@ class NewIssueForm(forms.Form):
 
 class NovaAttachmentForm(forms.Form):
     Fitxer =  forms.FileField()
+
+class IssueListFormHelper(FormHelper):
+    model = Issue
+    form_tag = False
+
 
