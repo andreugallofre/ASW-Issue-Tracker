@@ -35,8 +35,8 @@
 
           <div class="btn-group" style='float: right; margin: 10px' role="group" aria-label="Button group with nested dropdown">
             {% if user.is_authenticated %}
-              <button type="submit" class="btn btn-primary" onclick="window.location.href='/issue'">Nova Issue</button> 
-              <button type="submit" class="btn btn-secondary" onclick="window.location.href='{% url 'logout' %}'">Desconectar</button> 
+              <button type="submit" class="btn btn-secondary" onclick="window.location.href='/issue'">Nova Issue</button> 
+              <button type="submit" class="btn btn-primary" onclick="window.location.href='{% url 'logout' %}'">Desconectar</button> 
             {% else %}
               <button type="submit" class="btn btn-secondary" onclick="window.location.href='{% url 'social:begin' 'google-oauth2' %}'">Iniciar sessió</button>
             {% endif %}
