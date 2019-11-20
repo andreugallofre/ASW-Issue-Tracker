@@ -111,7 +111,6 @@ class NewIssue(CreateView):
 
     def form_valid(self, form):
         form.instance.data_creacio = date.today()
-        form.instance.assignee_id = self.request.user.id
         form.instance.creator_id = self.request.user.id
         form.instance.status = StatusSelector.Nou.value
         nissue = form.save()

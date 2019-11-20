@@ -13,13 +13,13 @@ class NovaAttachmentForm(forms.ModelForm):
 class NovaIssueForm(forms.ModelForm):
     class Meta:
         model = Issue
-        fields = ['titol', 'descripcio', 'tipus', 'prioritat', 'adjunt']
+        fields = ['titol', 'descripcio', 'tipus', 'assignee', 'prioritat', 'adjunt']
 
 
 class EditIssueForm(forms.ModelForm):
     class Meta:
         model = Issue
-        fields = ['titol', 'descripcio', 'tipus', 'prioritat']
+        fields = ['titol', 'descripcio', 'tipus', 'assignee', 'prioritat']
 
 
 class MultipleForm(forms.Form):
