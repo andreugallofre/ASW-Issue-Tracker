@@ -111,7 +111,6 @@ class NewIssue(CreateView):
 
     def form_valid(self, form):
         form.instance.data_creacio = date.today()
-        form.instance.assignee_id = self.request.user.id
         form.instance.creator_id = self.request.user.id
         form.instance.status = StatusSelector.Nou.value
         nissue = form.save()
@@ -183,6 +182,60 @@ class AttachIssue(CreateView, DetailView):
         comment.save()
         return redirect('issueDetall', pk=issueID)
 
+
+class ChangeState(CreateView, DetailView):
+    print("holita")
+    form_class = CommentForm
+    model = Issue
+    template_name = 'canviaEstat.html'
+    success_url = ''
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # canviar-ho per statuses i no per prioritats-!
+        # getting user id to know which comments are their own and stuff
+
+        user = self.request.user.id
+        context['current_uid'] = user
+
+        # checking if the user voted the issue
+        url = self.request.path
+        urlSplit = url.split("/")
+
+        issueID = urlSplit[len(urlSplit)-2]
+        issue = Issue.objects.get(id=issueID)
+
+        v = Vote.objects.all().filter(voter=user, issue=issue)
+        context['vote'] = not v.exists()
+
+        # checking if the user is watching the issue
+        context['watch'] = True
+        context['prioritatSelector'] = PrioritatSelector.__members__
+        return context
+
+    def form_valid(self, form):
+        form.instance.data_creacio = date.today()
+        url = self.request.path
+        # set success url according to our current one
+        self.success_url = url
+        # get issue id to bind it to the comment
+        urlSplit = url.split("/")
+        status = urlSplit[len(urlSplit)-1]
+        issueID = urlSplit[len(urlSplit)-2]
+        # issue binding
+        issue_to_bind = Issue.objects.get(id=issueID)
+
+        if issue_to_bind.status != status:
+            form.instance.issue = issue_to_bind
+            # do better
+            form.instance.owner = self.request.user
+            form.instance.content = "Estat canviat: <a href='/?status=" + status + "'>" + status + "</a><br>" + form.instance.content
+            issue_to_bind.status = status
+            issue_to_bind.save()
+            nissue = form.save()
+            return redirect('issueDetall', pk=issueID)
+
+        return redirect('issueDetall', pk=issueID)
 
 # DJANGO DETAILED VIEW
 class DetailedIssue(CreateView, DetailView):

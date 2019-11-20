@@ -13,7 +13,7 @@ class Issue(models.Model):
     descripcio = models.TextField()
     data_creacio = models.DateField()
     creator = models.ForeignKey(oauth_models.USER_MODEL, related_name='Creator', on_delete=models.CASCADE)
-    assignee = models.ForeignKey(oauth_models.USER_MODEL, related_name='Assignee', on_delete=models.CASCADE)
+    assignee = models.ForeignKey(oauth_models.USER_MODEL, related_name='Assignee', on_delete=models.CASCADE, null=True, blank=True)
     tipus = models.CharField(
       max_length=20,
       choices=[(tag.name, tag.value) for tag in TipusSelector],

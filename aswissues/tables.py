@@ -7,7 +7,12 @@ class IssueTable(tables.Table):
     Assignat = tables.TemplateColumn('<a href= "./?assignee={{record.assignee}}">{{record.assignee}}</a>')
     prioritat = tables.TemplateColumn('<a href= "./?prioritat={{record.prioritat}}">{{record.prioritat}}</a>')
     tipus = tables.TemplateColumn('<a href= "./?tipus={{record.tipus}}">{{record.tipus}}</a>')
+<<<<<<< HEAD
     status = tables.TemplateColumn('<a href= "./?status={{record.status}}">{{record.status}}</a>')
+=======
+    status = tables.TemplateColumn('<a href= "./?tipus={{record.status}}">{{record.status}}</a>')
+    # nameCr = tables.TemplateColumn('<a href= "./?creator='+nameC+'">'+nameC+'</a>')
+>>>>>>> 999373b09b5dc66b4c4497b3b391a2a697240550
     data_creacio = tables.TemplateColumn('<a href= "./?tidata_creacio={{record.data_creacio}}">{{record.data_creacio}}</a>')
 
 

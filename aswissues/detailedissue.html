@@ -44,7 +44,7 @@
 
             <div class="col-8">
                 <!-- Issue details -->
-                <b>Issue #{{ object.id}} </b> {{ object.tipus}} </br>
+                <b>Issue #{{ object.id}} </b> {{ object.tipus}}<br>
                 <h1>{{ object.titol }}</h1>
                 <!-- Issue info -->
                 <p>
@@ -89,7 +89,7 @@
                     <div id="comments-actions-menu">
                         <ul class="comment-actions">
                             <!-- user-only visible content-->
-                            {% if entry.owner.id and current_uid%}
+                            {% if entry.owner.id == current_uid%}
                             <li><a onclick="return confirm('Are you sure you want to delete?')"
                                     href="comment/delete/{{entry.id}}">Esborra</a></li>
                             <li><button type="button" class="btn btn-link"
@@ -143,7 +143,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                 {% for i in statusSelector%}
-                                <a class="dropdown-item" href="/issue/{{ object.id }}/chstate/{{ i }}">{{i}}</a>
+                                <a class="dropdown-item" href="/chstate/{{ object.id }}/{{ i }}">{{i}}</a>
                                 {% endfor %}
                             </div>
                         </div>
@@ -155,17 +155,16 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                 <a class="dropdown-item" href="/attach/{{ object.id}}">Adjunteu fitxer</a>
-                                {% if current_uid and object.creator.id %}
+                                {% if current_uid == object.creator.id %}
                                 <a onclick="return confirm('Segur que voleu esborrar l'issue?')" class="dropdown-item"
                                     href="/issue/{{object.id}}/delete">Esborreu l'issue</a>
                                 {% endif %}
                             </div>
                         </div>
-                        {% if current_uid and object.creator.id %}
-                        <form action='/edit/{{ object.id}}' method='GET'>
-                            <button type="submit" class="btn btn-secondary">Editar</button>
-                        </form>
+                        {% if current_uid == object.creator.id %}
+                        <button type="submit" class="btn btn-secondary" onclick="window.location.href='/edit/{{ object.id}}'">Editar</button> 
                         {% endif %}
+                        <button type="submit" class="btn btn-primary" onclick="window.location.href='/'">Inici</button> 
                     </div>
                 </div>
 
@@ -175,19 +174,19 @@
                     <div style="border: thin solid #d0d0d0">
                         <dl>
                             <dt>Assignat</dt>
-                            <dd>{{object.assignee.username}}</dd>
+                            <dd><a href="/?assignee={{object.assignee}}">{{object.assignee.username}}</a></dd>
                         </dl>
                         <dl>
                             <dt>Tipus</dt>
-                            <dd>{{object.tipus}}</dd>
+                            <dd><a href="/?tipus={{object.tipus}}">{{object.tipus}}</a></dd>
                         </dl>
                         <dl>
                             <dt>Prioritat</dt>
-                            <dd>{{object.prioritat}}</dd>
+                            <dd><a href="/?prioritat={{object.prioritat}}">{{object.prioritat}}</a></dd>
                         </dl>
                         <dl>
                             <dt>Estat</dt>
-                            <dd>{{object.status}}</dd>
+                            <dd><a href="/?status={{object.status}}">{{object.status}}</a></dd>
                         </dl>
                         <dl>
                             <dt>Vots</dt>
