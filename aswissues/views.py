@@ -261,3 +261,12 @@ def delete_comment(request, id, pk):
     comment.delete()
     url = '/issue/'+str(id)+'/'
     return redirect(url)
+
+def update_comment(request, id, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    c = request.POST['formContent']
+    if c is not None:
+        comment.content = c
+        comment.save(update_fields=["content"])
+    url = '/issue/'+str(id)+'/'
+    return redirect(url)

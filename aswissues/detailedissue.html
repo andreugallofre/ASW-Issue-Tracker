@@ -40,6 +40,8 @@
     </style>
     <div class="container mt-4">
         <div class="row">
+
+
             <div class="col-8">
                 <!-- Issue details -->
                 <b>Issue #{{ object.id}} </b> {{ object.tipus}} </br>
@@ -85,21 +87,41 @@
                             <!-- user-only visible content-->
                             {% if entry.owner.id and current_uid%}
                             <li><a onclick="return confirm('Are you sure you want to delete?')"
-                                    href="comment/delete/{{entry.id}}">Delete</a></li>
-                            <li><a href="comment/edit/{{entry.id}}">Edit</a></li>
+                                    href="comment/delete/{{entry.id}}">Esborra</a></li>
+                            <li><button type="button" class="btn btn-link"
+                                    onclick="document.getElementById('divEditComment{{entry.id}}').style.display = 'block';">
+                                    Edita</button>
+                            </li>
                             {% endif %}
                             <!-- public content-->
                             <li>{{entry.data_creacio}}</li>
                         </ul>
                     </div>
-
+                    <!-- submit edition -->
+                    <div id="divEditComment{{entry.id}}" style="display: none;">
+                        <form method="POST" action="comment/update/{{entry.id}}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <textarea class="form-control" name="formContent" rows="3">{{entry.content}}</textarea>
+                            </div>
+                            <div class=" btn-group">
+                                <button type="submit" class="btn btn-primary">Edita</button>
+                                </button>
+                                <a onclick="document.getElementById('divEditComment{{entry.id}}').style.display = 'none';"
+                                    id="btnGroup2" type="button" class="btn btn-secondary">
+                                    Cancela
+                                </a>
+                            </div>
+                        </form>
+                    </div>
                 </article>
                 <hr class="col-xs-12">
+
                 {% empty %}
                 <!-- no entries -->
                 {% endfor %}
-
             </div>
+
 
             <!-- Right menu -->
             <div class="col-4">
@@ -137,7 +159,6 @@
                         </form>
                     </div>
                 </div>
-
 
 
                 <!-- Issue Information -->
