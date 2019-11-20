@@ -24,17 +24,27 @@ from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 
-import pprint
+from django_tables2 import SingleTableView
+from .tables import IssueTable
+from .forms import IssueListFormHelper
+from .filters import IssueFilter
+from .utils import PagedFilteredTableView
 
-# Create your views here.
-class HomePageView(ListView):
+
+class HomePageView(PagedFilteredTableView):
     model = Issue
+    table_class = IssueTable
     template_name = 'homepage.html'
+    filter_class = IssueFilter
+    formhelper_class = IssueListFormHelper
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
 
+    def get_queryset(self):
+        qs = super(HomePageView, self).get_queryset()
+        return list(qs)
 
 class Login(View):
     form_class = LoginForm
