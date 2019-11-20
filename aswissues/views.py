@@ -187,10 +187,22 @@ class DetailedIssue(CreateView, DetailView):
 
         v = Vote.objects.all().filter(voter=user, issue = issue)
         context['vote'] = not v.exists()
+        nv = Vote.objects.filter(issue=issue)
+        if nv is None:
+            nv = 0
+        else:
+            nv = len(nv)
+        context['nvotes'] = nv
 
         # checking if the user is watching the issue
         w = Watch.objects.all().filter(watcher=user, issue = issue)
         context['watch'] = not w.exists()
+        nw = Watch.objects.filter(issue=issue)
+        if nw is None:
+            nw = 0
+        else:
+            nw = len(nw)
+        context['nwatch'] = nw
         context['prioritatSelector'] = PrioritatSelector.__members__
         return context
 

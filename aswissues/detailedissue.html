@@ -159,6 +159,7 @@
                         <dl>
                             <dt>Vots</dt>
                             <dd>
+                                ({{nvotes}})
                                 {% if vote %}
                                 <a href="vote">Vote</a>
                                 {% endif %}
@@ -170,7 +171,9 @@
                         </dl>
                         <dl>
                             <dt>Watchers</dt>
-                            <dd>{% if watch %}
+                            <dd>
+                                ({{nwatch}})
+                                {% if watch %}
                                 <a href="watch">Watch</a>
                                 {% endif %}
                                 {% if not watch %}
