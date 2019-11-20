@@ -102,6 +102,7 @@ class NewIssue(CreateView):
         form.instance.data_creacio = date.today()
         form.instance.assignee_id = self.request.user.id
         form.instance.creator_id = self.request.user.id
+        form.instance.status = StatusSelector.Nou.value
         nissue = form.save()
         return redirect('issueDetall', pk=nissue.pk)
 
@@ -287,7 +288,7 @@ def change_state(request, id, status):
     comment.content = "Estat canviat: " + status
     comment.save()
 
-    issue.status = StatusSelector[status]
+    issue.status = StatusSelector[status].value
     issue.save()
     url = '/issue/' + str(id) + '/'
     return redirect(url)

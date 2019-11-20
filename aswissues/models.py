@@ -25,17 +25,20 @@ class Issue(models.Model):
       default=PrioritatSelector.Trivial
     )
     adjunt = models.FileField(blank=True)
+
     status = models.CharField(
       max_length=20,
       choices=[(tag.name, tag.value) for tag in StatusSelector],
       default=StatusSelector.Obert
     )
 
+
 class Attachment(models.Model):
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
     data_creacio = models.DateField()
     owner = models.ForeignKey(oauth_models.USER_MODEL, on_delete=models.CASCADE)
     data = models.FileField()
+
 
 class Comment(models.Model):
     content = models.TextField()
