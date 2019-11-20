@@ -9,7 +9,7 @@ from .forms import NovaIssueForm, LoginForm, RegisterForm, NovaAttachmentForm, C
 from .models import Issue, Comment, Vote, Watch
 from social_django import models as oauth_models
 from .multiple_form import MultipleFormsView
-from .enums import PrioritatSelector
+from .enums import PrioritatSelector, StatusSelector
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -105,7 +105,7 @@ class NewIssue(CreateView):
         nissue = form.save()
         return redirect('issueDetall', pk=nissue.pk)
 
-        #return super(NewIssue, self).form_valid(form)
+
 def EditarIssue(request, id):
     form_class = EditIssueForm
     instance = get_object_or_404(Issue, id=id)
@@ -114,6 +114,7 @@ def EditarIssue(request, id):
         nissue = form.save()
         return redirect('issueDetall', pk=id)
     return render(request, 'edit.html', {'form': form})
+
 
 class AttachIssue(CreateView, DetailView):
     form_class = NovaAttachmentForm
@@ -161,7 +162,6 @@ class AttachIssue(CreateView, DetailView):
         comment.content = "S'ha adjuntat un nou fitxer:"
         comment.save()
         return redirect('issueDetall', pk=issueID)
-        #return super().form_valid(form)
 
 
 # DJANGO DETAILED VIEW
@@ -204,6 +204,8 @@ class DetailedIssue(CreateView, DetailView):
             nw = len(nw)
         context['nwatch'] = nw
         context['prioritatSelector'] = PrioritatSelector.__members__
+        context['statusSelector'] = StatusSelector.__members__
+
         return context
 
     def form_valid(self, form):
@@ -220,12 +222,14 @@ class DetailedIssue(CreateView, DetailView):
         form.instance.owner = self.request.user
         return super().form_valid(form)
 
+
 def issue_vote(request, pk):
     issue = get_object_or_404(Issue, pk=pk)
     usr = request.user
     Vote.objects.create(voter=usr, issue=issue, type=True)
     url = '/issue/'+str(pk)+'/'
     return redirect(url)
+
 
 def issue_unvote(request, pk):
     issue = get_object_or_404(Issue, pk=pk)
@@ -235,6 +239,7 @@ def issue_unvote(request, pk):
     url = '/issue/'+str(pk)+'/'
     return redirect(url)
 
+
 def issue_unwatch(request, pk):
     issue = get_object_or_404(Issue, pk=pk)
     usr = request.user
@@ -243,6 +248,7 @@ def issue_unwatch(request, pk):
     url = '/issue/'+str(pk)+'/'
     return redirect(url)
 
+
 def issue_watch(request, pk):
     issue = get_object_or_404(Issue, pk=pk)
     usr = request.user
@@ -250,17 +256,20 @@ def issue_watch(request, pk):
     url = '/issue/'+str(pk)+'/'
     return redirect(url)
 
+
 def issue_delete(request, pk):
     issue = get_object_or_404(Issue, pk=pk)
     issue.delete()
     url = '/'
     return redirect(url)
 
+
 def delete_comment(request, id, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     url = '/issue/'+str(id)+'/'
     return redirect(url)
+
 
 def update_comment(request, id, pk):
     comment = get_object_or_404(Comment, pk=pk)
@@ -269,4 +278,16 @@ def update_comment(request, id, pk):
         comment.content = c
         comment.save(update_fields=["content"])
     url = '/issue/'+str(id)+'/'
+    return redirect(url)
+
+
+def change_state(request, id, status):
+    issue = get_object_or_404(Issue, pk=id)
+    comment = Comment.create(request.user, issue, date.today(), None)
+    comment.content = "Estat canviat: " + status
+    comment.save()
+
+    issue.status = StatusSelector[status]
+    issue.save()
+    url = '/issue/' + str(id) + '/'
     return redirect(url)
