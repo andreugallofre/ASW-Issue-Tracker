@@ -129,7 +129,7 @@ def EditarIssue(request, id):
             change_priority_comment(request.user, issue, form.instance.prioritat)
 
         if issue.tipus != form.instance.tipus:
-            change_priority_comment(request.user, issue, form.instance.tipus)
+            change_tipus_comment(request.user, issue, form.instance.tipus)
 
         nissue = form.save()
         return redirect('issueDetall', pk=id)
@@ -146,7 +146,7 @@ class AttachIssue(CreateView, DetailView):
         context = super().get_context_data(**kwargs)
         # canviar-ho per statuses i no per prioritats-!
         # getting user id to know which comments are their own and stuff
-        
+
         user = self.request.user.id
         context['current_uid'] = user
 
@@ -305,7 +305,7 @@ def change_state(request, id, status):
     issue = get_object_or_404(Issue, pk=id)
     print(request.user)
     comment = Comment.create(request.user, issue, date.today(), None)
-    comment.content = "Estat canviat: " + status
+    comment.content = "Estat canviat: <a href='/?status=" + status + "'>" + status
     comment.save()
 
     issue.status = StatusSelector[status].value
@@ -316,13 +316,13 @@ def change_state(request, id, status):
 
 def change_priority_comment(user, issue, prioritat):
     comment = Comment.create(user, issue, date.today(), None)
-    comment.content = "Marcat com: <a href='/'>" + prioritat + "</a>"
+    comment.content = "Marcat com: <a href='/?prioritat=" + prioritat + "'>" + prioritat + "</a>"
     comment.save()
     return None
 
 
-def change_priority_comment(user, issue, tipus):
+def change_tipus_comment(user, issue, tipus):
     comment = Comment.create(user, issue, date.today(), None)
-    comment.content = "Marcat com: <a href='/'>" + tipus + "</a>"
+    comment.content = "Marcat com: <a href='/?tipus=" + tipus + "'>" + tipus + "</a>"
     comment.save()
     return None

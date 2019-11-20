@@ -31,18 +31,8 @@
           color: white;
           }         
           </style>
-              <h1>Issue Tracker</h1>
-              <div style='float: right;'><a href="login">Iniciar Sessió</a></div>
-          <form action="issue">
-              <button class="button">Nova Issue</button>
-          </form>
+          <h1>Issue Tracker</h1>
           
-          <div id="myBtnContainer"> Filtrar per:
-              <button class="btn active" onclick="filterSelection('all')"> Totes</button>
-              <button class="btn" onclick="filterSelection('open')"> Obertes</button>
-              <button class="btn" onclick="filterSelection('myissues')"> Les meves issues</button>
-              <button class="btn" onclick="filterSelection('watching')"> Observant</button>
-          </div>
           {% if user.is_authenticated %}
               <div style='float: right;'><a class="btn btn-primary" href="{% url 'logout' %}">Desconnectar</a></div>
               <form action="issue">
@@ -51,6 +41,13 @@
           {% else %}
             <div style='float: right;'><a href="{% url 'social:begin' 'google-oauth2' %}">Iniciar Sessió</a></div>
           {% endif %}
+
+          <div id="myBtnContainer"> Filtrar per:
+            <button class="btn active" onclick="filterSelection('all')"> Totes</button>
+            <button class="btn" onclick="filterSelection('open')"> Obertes</button>
+            <button class="btn" onclick="filterSelection('myissues')"> Les meves issues</button>
+            <button class="btn" onclick="filterSelection('watching')"> Observant</button>
+          </div>
 
           <b>Issues:</b>
 
