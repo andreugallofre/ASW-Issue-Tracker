@@ -44,7 +44,7 @@
 
             <div class="col-8">
                 <!-- Issue details -->
-                <b>Issue #{{ object.id}} </b> {{ object.tipus}} <a class="float-right" href="/">Inici</a></br> 
+                <b>Issue #{{ object.id}} </b> {{ object.tipus}}<br>
                 <h1>{{ object.titol }}</h1>
                 <!-- Issue info -->
                 <p>
@@ -164,6 +164,7 @@
                         {% if current_uid == object.creator.id %}
                         <button type="submit" class="btn btn-secondary" onclick="window.location.href='/edit/{{ object.id}}'">Editar</button> 
                         {% endif %}
+                        <button type="submit" class="btn btn-primary" onclick="window.location.href='/'">Inici</button> 
                     </div>
                 </div>
 
