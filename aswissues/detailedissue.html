@@ -125,7 +125,10 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                 <a class="dropdown-item" href="/attach/{{ object.id}}">Adjunteu fitxer</a>
-                                <a class="dropdown-item" href="#">Esborreu l'issue</a>
+                                {% if current_uid and object.creator.id %}
+                                <a onclick="return confirm('Are you sure you want to delete?')" class="dropdown-item"
+                                    href="/issue/{{object.id}}/delete">Esborreu l'issue</a>
+                                {% endif %}
                             </div>
                         </div>
                         <form action='/edit/{{ object.id}}' method='GET'>

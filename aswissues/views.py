@@ -250,6 +250,12 @@ def issue_watch(request, pk):
     url = '/issue/'+str(pk)+'/'
     return redirect(url)
 
+def issue_delete(request, pk):
+    issue = get_object_or_404(Issue, pk=pk)
+    issue.delete()
+    url = '/'
+    return redirect(url)
+
 def delete_comment(request, id, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()

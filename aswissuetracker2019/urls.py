@@ -22,7 +22,7 @@ from django.conf.urls import include
 from django.contrib.auth import logout
 from aswissues.views import Issue, Login, Register, HomePageView
 from django.conf.urls.static import static
-from aswissues.views import NewIssue, DetailedIssue, issue_vote, issue_unvote, issue_watch, issue_unwatch, delete_comment, EditarIssue, AttachIssue
+from aswissues.views import NewIssue, DetailedIssue, issue_vote, issue_unvote, issue_watch, issue_unwatch, issue_delete, delete_comment, EditarIssue, AttachIssue
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,6 +35,7 @@ urlpatterns = [
     path('logout/', include('django.contrib.auth.urls'), name='logout'),
     path('edit/<slug:id>/', EditarIssue,name='EditarIssue'),
     path('issue/<slug:pk>/vote', issue_vote, name='issue_vote'),
+    path('issue/<slug:pk>/delete', issue_delete, name='issue_delete'),
     path('issue/<slug:pk>/unvote', issue_unvote, name='issue_unvote'),
     path('issue/<slug:pk>/watch', issue_watch, name='issue_watch'),
     path('issue/<slug:pk>/unwatch', issue_unwatch, name='issue_unwatch'),
