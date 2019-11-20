@@ -29,15 +29,16 @@
           .active, .btn:hover {
           background-color: #666;
           color: white;
-          }         
+          }
           </style>
           <h1>Issue Tracker</h1>
-          
+
           {% if user.is_authenticated %}
               <div style='float: right;'><a class="btn btn-primary" href="{% url 'logout' %}">Desconnectar</a></div>
-              <form action="issue">
+
+              <!-- <form action="issue">
                   <button class="button">Nova Issue</button>
-              </form>
+              </form> -->
           {% else %}
             <div style='float: right;'><a href="{% url 'social:begin' 'google-oauth2' %}">Iniciar Sessió</a></div>
           {% endif %}
@@ -47,7 +48,11 @@
             <button class="btn" onclick="filterSelection('open')"> Obertes</button>
             <button class="btn" onclick="filterSelection('myissues')"> Les meves issues</button>
             <button class="btn" onclick="filterSelection('watching')"> Observant</button>
+            {% if user.is_authenticated %}
+            <div style='float: right;'><a class="btn btn-primary" href="issue">Nova Issue</a></div>
+            {% endif %}
           </div>
+
 
           <b>Issues:</b>
 
