@@ -26,12 +26,17 @@ from django.views.generic.edit import UpdateView
 
 from django_tables2 import SingleTableView
 from .tables import IssueTable
+from .forms import IssueListFormHelper
+from .filters import IssueFilter
+from .utils import PagedFilteredTableView
 
-# Create your views here.
-class HomePageView(SingleTableView):
+
+class HomePageView(PagedFilteredTableView):
     model = Issue
     table_class = IssueTable
     template_name = 'homepage.html'
+    filter_class = IssueFilter
+    formhelper_class = IssueListFormHelper
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
