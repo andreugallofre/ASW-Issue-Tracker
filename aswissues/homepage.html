@@ -33,24 +33,20 @@
           </style>
           <h1>Issue Tracker</h1>
 
-          {% if user.is_authenticated %}
-              <div style='float: right;'><a class="btn btn-primary" href="{% url 'logout' %}">Desconnectar</a></div>
-
-              <!-- <form action="issue">
-                  <button class="button">Nova Issue</button>
-              </form> -->
-          {% else %}
-            <div style='float: right;'><a href="{% url 'social:begin' 'google-oauth2' %}">Iniciar Sessió</a></div>
-          {% endif %}
+          <div class="btn-group" style='float: right; margin: 10px' role="group" aria-label="Button group with nested dropdown">
+            {% if user.is_authenticated %}
+              <button type="submit" class="btn btn-primary" onclick="window.location.href='/issue'">Nova Issue</button> 
+              <button type="submit" class="btn btn-secondary" onclick="window.location.href='{% url 'logout' %}'">Desconectar</button> 
+            {% else %}
+              <button type="submit" class="btn btn-secondary" onclick="window.location.href='{% url 'social:begin' 'google-oauth2' %}'">Iniciar sessió</button>
+            {% endif %}
+          </div>
 
           <div id="myBtnContainer"> Filtrar per:
             <button class="btn active" onclick="filterSelection('all')"> Totes</button>
             <button class="btn" onclick="filterSelection('open')"> Obertes</button>
             <button class="btn" onclick="filterSelection('myissues')"> Les meves issues</button>
             <button class="btn" onclick="filterSelection('watching')"> Observant</button>
-            {% if user.is_authenticated %}
-            <div style='float: right;'><a class="btn btn-primary" href="issue">Nova Issue</a></div>
-            {% endif %}
           </div>
 
 
