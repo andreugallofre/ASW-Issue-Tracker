@@ -14,5 +14,5 @@ class IssueTable(tables.Table):
     class Meta:
         model = Issue
         template_name = "django_tables2/bootstrap4.html"
-        fields = ("titol", "tipus", "prioritat", "status", "Assignat", , "data_creacio")
+        fields = ("titol", "tipus", "prioritat", "status", "Assignat", "data_creacio")
         per_page = 20
