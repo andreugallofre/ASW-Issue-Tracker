@@ -1,11 +1,27 @@
-<body bgcolor="#E6E6FA">
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     {% load crispy_forms_tags %}
+    <script>
 
+        $(document).ready(function(){
+
+            $("#response").modal('show');
+
+        });
+
+        </script>
+        </head>
+        <body bgcolor="#E6E6FA">
     <style>
         dl {
             width: 100%;
@@ -38,7 +54,7 @@
             display: inline;
         }
     </style>
-    <div class="container mt-4">
+     <div class="container mt-4">
         <div class="row">
 
 
@@ -103,7 +119,7 @@
                     </div>
                     <!-- submit edition -->
                     <div id="divEditComment{{entry.id}}" style="display: none;">
-                        <form method="POST" action="comment/update/{{entry.id}}">
+                       <!-- <form method="POST" action="comment/update/{{entry.id}}">
                             {% csrf_token %}
                             <div class="form-group">
                                 <textarea class="form-control" name="formContent" rows="3">{{entry.content}}</textarea>
@@ -116,7 +132,7 @@
                                     Cancela
                                 </a>
                             </div>
-                        </form>
+                        </form> -->
                     </div>
                 </article>
                 <hr class="col-xs-12">
@@ -130,9 +146,8 @@
                 {% endif %}
             </div>
 
-
             <!-- Right menu -->
-            <div class="col-4">
+                        <div class="col-4">
                 <div class="row-8 mb-4">
                     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
 
@@ -170,12 +185,13 @@
                 </div>
 
 
+
                 <!-- Issue Information -->
                 <div class="row-8">
                     <div style="border: thin solid #d0d0d0">
                         <dl>
                             <dt>Assignat</dt>
-                            <dd>{{object.assignee.username}}</dd>
+                            <dd>{{object.assignee.name}}</dd>
                         </dl>
                         <dl>
                             <dt>Tipus</dt>
@@ -192,7 +208,6 @@
                         <dl>
                             <dt>Vots</dt>
                             <dd>
-                                ({{nvotes}})
                                 {% if vote %}
                                 <a href="vote">Vote</a>
                                 {% endif %}
@@ -204,31 +219,49 @@
                         </dl>
                         <dl>
                             <dt>Watchers</dt>
-                            <dd>
-                                ({{nwatch}})
-                                {% if watch %}
-                                <a href="watch">Watch</a>
-                                {% endif %}
-                                {% if not watch %}
-                                <a href="unwatch">Unwatch</a>
-                                {% endif %}</a></dd>
+                            <dd><a href="watch">Segueix aquesta issue</a></dd>
                         </dl>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal hide fade in" id="response" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Canviar l'estat</h5>
+                    <form  action="/issue/{{object.id}}" method="get">
+                      <button type="submit" class="close">&times;</button>
+                    </form>
+                </div>
+                <div class="modal-body">
+                  <form style="width:100%" action="" method="post" enctype="multipart/form-data">
+                    <div class="list-group">
+                        <div class="d-flex w-100 justify-content-between">
+
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Canviar estat" id="submit" name="submit" class="btn btn-primary">
+                    </div>
+                      </form>
+                </div>
+            </div>
+        </div>
 
 
-    <!-- needed for the dropdown menu -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+        <!-- needed for the dropdown menu -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 
 </body>
