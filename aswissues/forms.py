@@ -51,11 +51,7 @@ class NewIssueForm(forms.Form):
     opcionsp = (('Trivial', 'Trivial'),('Menor', 'Menor'),('Major', 'Major'),('Crítica', 'Crítica'),('Bloquejant', 'Bloquejant'))
     prioritat = forms.ChoiceField(choices=opcionsp)
 
-class NovaAttachmentForm(forms.Form):
-    Fitxer =  forms.FileField()
 
 class IssueListFormHelper(FormHelper):
     model = Issue
     form_tag = False
-
-
