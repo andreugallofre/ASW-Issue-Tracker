@@ -29,8 +29,12 @@
           .active, .btn:hover {
           background-color: #666;
           color: white;
-          }         
+          }
+          .container {
+            width: 200%;
+          }
           </style>
+          <div class="container">
           <h1>Issue Tracker</h1>
           
           {% if user.is_authenticated %}
@@ -43,8 +47,8 @@
           {% endif %}
 
           <div id="myBtnContainer"> Filtrar per:
-            <button class="btn active" onclick="filterSelection('all')"> Totes</button>
-            <button class="btn" onclick="filterSelection('open')"> Obertes</button>
+            <button class="btn" onclick="window.location.href = './'"> Totes</button>
+            <button class="btn" onclick="window.location.href = './?status=Obert'"> Obertes</button>
             <button class="btn" onclick="filterSelection('myissues')"> Les meves issues</button>
             <button class="btn" onclick="filterSelection('watching')"> Observant</button>
           </div>
@@ -57,13 +61,28 @@
             // Marcar com a actiu el botó apretat
             var btnContainer = document.getElementById("myBtnContainer");
             var btns = btnContainer.getElementsByClassName("btn");
-            for (var i = 0; i < btns.length; i++) {
-              btns[i].addEventListener("click", function(){
-                var current = document.getElementsByClassName("active");
-                current[0].className = current[0].className.replace(" active", "");
-                this.className += " active";
-              });
+            if (window.location.href.indexOf("status")> -1) {
+              btns[0].className.replace(" active", "")
+              btns[1].className += " active"
+              btns[2].className.replace(" active", "")
+              btns[3].className.replace(" active", "")
+            } else if (window.location.href.indexOf("creator")> -1) {
+              btns[0].className.replace(" active", "")
+              btns[2].className += " active"
+              btns[1].className.replace(" active", "")
+              btns[3].className.replace(" active", "")
+            } else if (window.location.href.indexOf("watcher")> -1) {
+              btns[0].className.replace(" active", "")
+              btns[3].className += " active"
+              btns[1].className.replace(" active", "")
+              btns[2].className.replace(" active", "")
+            } else {
+              btns[1].className.replace(" active", "")
+              btns[0].className += " active"
+              btns[2].className.replace(" active", "")
+              btns[3].className.replace(" active", "")
             }
           </script>
+        </div>
       </body>
 </html>
