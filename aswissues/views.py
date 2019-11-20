@@ -24,6 +24,7 @@ from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 
+import pprint
 
 # Create your views here.
 class HomePageView(ListView):
@@ -112,6 +113,14 @@ def EditarIssue(request, id):
     instance = get_object_or_404(Issue, id=id)
     form = form_class(request.POST or None, instance=instance)
     if form.is_valid():
+        issue = get_object_or_404(Issue, pk=id)
+
+        if issue.prioritat != form.instance.prioritat:
+            change_priority_comment(request.user, issue, form.instance.prioritat)
+
+        if issue.tipus != form.instance.tipus:
+            change_priority_comment(request.user, issue, form.instance.tipus)
+
         nissue = form.save()
         return redirect('issueDetall', pk=id)
     return render(request, 'edit.html', {'form': form})
@@ -284,6 +293,7 @@ def update_comment(request, id, pk):
 
 def change_state(request, id, status):
     issue = get_object_or_404(Issue, pk=id)
+    print(request.user)
     comment = Comment.create(request.user, issue, date.today(), None)
     comment.content = "Estat canviat: " + status
     comment.save()
@@ -292,3 +302,17 @@ def change_state(request, id, status):
     issue.save()
     url = '/issue/' + str(id) + '/'
     return redirect(url)
+
+
+def change_priority_comment(user, issue, prioritat):
+    comment = Comment.create(user, issue, date.today(), None)
+    comment.content = "Marcat com: <a href='/'>" + prioritat + "</a>"
+    comment.save()
+    return None
+
+
+def change_priority_comment(user, issue, tipus):
+    comment = Comment.create(user, issue, date.today(), None)
+    comment.content = "Marcat com: <a href='/'>" + tipus + "</a>"
+    comment.save()
+    return None

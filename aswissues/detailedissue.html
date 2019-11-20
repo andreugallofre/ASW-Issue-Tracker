@@ -61,6 +61,7 @@
                 <hr class="col-xs-12">
                 <!-- Comments form -->
                 <h3>Comentaris ({{object.comment_set.all|length}})</h3>
+                {% if user.is_authenticated %}
                 <form style="width:100%" action="" method="post">
                     {% csrf_token %}
                     {{ form.file_name }}
@@ -69,6 +70,7 @@
                         <input type="submit" value="Comenteu">
                     </div>
                 </form>
+                {% endif %}
 
                 <!-- put here the rest of comments -->
                 {% for entry in object.comment_set.all %}
@@ -78,7 +80,9 @@
                         <span class="author author-name"><b>{{entry.owner.username}}</b></span>
                     </header>
                     <div class="wiki-content comment-content">
-                        <p>{{entry.content}}</p>
+                        {% autoescape off %}
+                            <p>{{entry.content}}</p>
+                        {% endautoescape %}
                         <a class="attachment"
                             href="{{ MEDIA_URL }}/media/{{entry.adjunt.data}}">{{entry.adjunt.data}}</a>
                     </div>
@@ -120,6 +124,10 @@
                 {% empty %}
                 <!-- no entries -->
                 {% endfor %}
+
+                {% if not user.is_authenticated %}
+                <div><a href="{% url 'social:begin' 'google-oauth2' %}?next={{request.path}}">Inicia sessió per afegir un comentari</a></div>
+                {% endif %}
             </div>
 
 
@@ -153,10 +161,11 @@
                                 {% endif %}
                             </div>
                         </div>
+                        {% if current_uid and object.creator.id %}
                         <form action='/edit/{{ object.id}}' method='GET'>
-
                             <button type="submit" class="btn btn-secondary">Editar</button>
                         </form>
+                        {% endif %}
                     </div>
                 </div>
 
