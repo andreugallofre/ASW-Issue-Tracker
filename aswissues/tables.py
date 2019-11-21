@@ -10,19 +10,20 @@ class IssueTable(tables.Table):
     tipus = tables.TemplateColumn('<a href= "./?tipus={{record.tipus}}">{{record.tipus}}</a>')
     status = tables.TemplateColumn('<a href= "./?status={{record.status}}">{{record.status}}</a>')
     data_creacio = tables.TemplateColumn('<a href= "./?data_creacio={{record.data_creacio}}">{{record.data_creacio}}</a>')
-    votes = tables.Column(empty_values=())
-    watchers = tables.Column(empty_values=())
+    votes = tables.Column(empty_values=(), verbose_name="Vots")
+    watchers = tables.Column(empty_values=(), verbose_name= "Watching?")
 
+    
     def render_votes(self, value, record):
         return Vote.objects.filter(issue=record).count()
 
     def render_watchers(self, value, record):
         if self.request.user.is_authenticated:
-            return Watch.objects.filter(issue=record, watcher=self.request.user).count()
-        return 0
+            if Watch.objects.filter(issue=record, watcher=self.request.user).count() > 0: return "Sí"
+        return "No"
 
     class Meta:
         model = Issue
         template_name = "django_tables2/bootstrap4.html"
-        fields = ("titol", "tipus", "prioritat", "status", "Assignat", "votes", "watchers", "data_creacio")
+        fields = ("titol", "tipus", "prioritat", "status", "Assignat", "votes", "data_creacio", "watchers")
         per_page = 20
