@@ -46,7 +46,7 @@
 
           <div id="myBtnContainer"> Filtrar per:
             <button class="btn" onclick="window.location.href = './'"> Totes</button>
-            <button class="btn" onclick="window.location.href = './?status=Obert'"> Obertes</button>
+            <button class="btn" onclick="window.location.href = './?status=Nou'"> Obertes</button>
             {% if user.is_authenticated %}
             <button class="btn" onclick="window.location.href = './?creator={{user.id}}'"> Les meves issues</button>
             <button class="btn" onclick="window.location.href = './?watch__watcher={{user.id}}'"> Observant</button>
