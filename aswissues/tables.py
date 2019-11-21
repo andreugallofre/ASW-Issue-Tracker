@@ -13,7 +13,7 @@ class IssueTable(tables.Table):
     votes = tables.Column(empty_values=(), verbose_name="Vots")
     watchers = tables.Column(empty_values=(), verbose_name= "Watching?")
 
-    
+
     def render_votes(self, value, record):
         return Vote.objects.filter(issue=record).count()
 
