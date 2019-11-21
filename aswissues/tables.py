@@ -5,7 +5,7 @@ from django_tables2.utils import Accessor
 class IssueTable(tables.Table):
 
     titol = tables.TemplateColumn('<a href= "./issue/{{record.id}}">{{record.titol}}</a>')
-    Assignat = tables.TemplateColumn('<a href= "./?assignee={{record.assignee}}">{{record.assignee}}</a>')
+    Assignat = tables.TemplateColumn('<a href= "./?assignee={{record.assignee.id}}">{{record.assignee}}</a>')
     prioritat = tables.TemplateColumn('<a href= "./?prioritat={{record.prioritat}}">{{record.prioritat}}</a>')
     tipus = tables.TemplateColumn('<a href= "./?tipus={{record.tipus}}">{{record.tipus}}</a>')
     status = tables.TemplateColumn('<a href= "./?status={{record.status}}">{{record.status}}</a>')
@@ -13,7 +13,7 @@ class IssueTable(tables.Table):
     votes = tables.Column(empty_values=(), verbose_name="Vots")
     watchers = tables.Column(empty_values=(), verbose_name= "Watching?")
 
-
+    
     def render_votes(self, value, record):
         return Vote.objects.filter(issue=record).count()
 
