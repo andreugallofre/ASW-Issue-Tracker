@@ -35,7 +35,7 @@ router.register(r'issues', api_views.IssueViewSet)
 
 
 urlpatterns = [
-    path('api', include(router.urls)),
+    path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
     path('issue/<slug:pk>/', DetailedIssue.as_view(), name="issueDetall"),
     path('issue/', NewIssue.as_view()),
