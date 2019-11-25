@@ -24,7 +24,18 @@ from aswissues.views import Issue, Login, Register, HomePageView
 from django.conf.urls.static import static
 from aswissues.views import NewIssue, DetailedIssue, issue_vote, issue_unvote, issue_watch, issue_unwatch, issue_delete, delete_comment, EditarIssue, AttachIssue, update_comment, ChangeState
 
+# REST API Related imports
+from rest_framework import routers
+from aswissues.api_views import api_views
+
+# REST API Router
+
+router = routers.DefaultRouter()
+router.register(r'api/issues', api_views.IssueViewSet)
+
+
 urlpatterns = [
+    path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('issue/<slug:pk>/', DetailedIssue.as_view(), name="issueDetall"),
     path('issue/', NewIssue.as_view()),

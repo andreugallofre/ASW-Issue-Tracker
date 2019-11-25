@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'aswissues',
     'crispy_forms',
     'django_tables2',
-    'django_filters'
+    'django_filters',
+    'rest_framework'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
