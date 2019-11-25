@@ -31,11 +31,11 @@ from aswissues.api_views import api_views
 # REST API Router
 
 router = routers.DefaultRouter()
-router.register(r'api/issues', api_views.IssueViewSet)
+router.register(r'issues', api_views.IssueViewSet)
 
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api', include(router.urls)),
     path('admin/', admin.site.urls),
     path('issue/<slug:pk>/', DetailedIssue.as_view(), name="issueDetall"),
     path('issue/', NewIssue.as_view()),
