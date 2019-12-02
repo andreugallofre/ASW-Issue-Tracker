@@ -32,7 +32,7 @@ from aswissues.api_views import api_views
 
 router = routers.DefaultRouter()
 router.register(r'issues', api_views.IssueViewSet)
-router.register(r'comment/{pk}', api_views.CommentViewSet, 'Comment')
+router.register(r'comment', api_views.CommentViewSet, 'comment')
 
 urlpatterns = [
     path('api/', include(router.urls)),

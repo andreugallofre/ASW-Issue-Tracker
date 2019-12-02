@@ -31,7 +31,7 @@ class IssueSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['titol', 'descripcio', 'data_creacio', 'creator', 'assignee',
                   'tipus', 'prioritat', 'status', 'vote_set', 'watch_set']
 
-class CommentSerializer(serializers.Serializer):
+class CommentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Comment
         fields = ['content', 'issue', 'adjunt']
