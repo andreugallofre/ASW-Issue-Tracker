@@ -26,9 +26,11 @@ from aswissues.views import NewIssue, DetailedIssue, issue_vote, issue_unvote, i
 
 # REST API Related imports
 from rest_framework import routers
+from rest_framework_swagger.views import get_swagger_view
 from aswissues.api_views import api_views
 
 # REST API Router
+schema_view = get_swagger_view(title='Pastebin API')
 
 router = routers.DefaultRouter()
 router.register(r'issues', api_views.IssueViewSet)
@@ -53,8 +55,8 @@ urlpatterns = [
     path('issue/<slug:pk>/unwatch', issue_unwatch, name='issue_unwatch'),
     path('issue/<slug:id>/comment/delete/<slug:pk>', delete_comment, name='delete_comment'),
     path('issue/<slug:id>/comment/update/<slug:pk>', update_comment, name='update_comment'),
-
     path('auth/', include(('social_django.urls', 'social_django'), namespace='social_auth')),
+    url('api/swagger', schema_view),
     url(r'^$', HomePageView.as_view(), name='home'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
