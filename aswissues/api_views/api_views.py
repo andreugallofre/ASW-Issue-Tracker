@@ -15,9 +15,9 @@ class CommentViewSet(viewsets.ModelViewSet):
     API endpoint that allows a single comment to be viewed or edited.
     """
     def retrieve(self,request,pk=None):
-         comment = Comment.objects.filter(pk=pk)
+         queryset = Comment.objects.filter(pk=pk)
          if not queryset:
              return Response(status=status.HTTP_400_BAD_REQUEST)
          else:
-             serializer = CommentSerializer(comment)
+             serializer = CommentSerializer(queryset)
              return Response(serializer.data,status=status.HTTP_200_OK)
