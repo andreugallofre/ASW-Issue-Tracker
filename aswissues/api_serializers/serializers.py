@@ -1,4 +1,4 @@
-from ..models import Issue, Vote, Watch
+from ..models import Issue, Vote, Watch, Comment
 from rest_framework import serializers
 from social_django import models as oauth_models
 
@@ -30,3 +30,8 @@ class IssueSerializer(serializers.HyperlinkedModelSerializer):
         model = Issue
         fields = ['titol', 'descripcio', 'data_creacio', 'creator', 'assignee',
                   'tipus', 'prioritat', 'status', 'vote_set', 'watch_set']
+
+class CommentSerializer(serializers.Serializer):
+    class Meta:
+        model = Comment
+        fields = ['content', 'issue', 'adjunt']
