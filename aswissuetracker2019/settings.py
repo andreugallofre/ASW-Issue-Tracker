@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django_tables2',
     'django_filters',
     'rest_framework',
-    'rest_framework_swagger'
+    'rest_framework_swagger',
+    'corsheaders',
 ]
 
 
@@ -63,6 +64,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -165,3 +168,5 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+CORS_ORIGIN_ALLOW_ALL = True
