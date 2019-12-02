@@ -1,7 +1,7 @@
 from django.db import models
 from social_django import models as oauth_models
 from .enums import TipusSelector, PrioritatSelector, StatusSelector
-
+from datetime import date
 
 class User(models.Model):
     name = models.CharField(max_length=100)
@@ -42,7 +42,7 @@ class Attachment(models.Model):
 
 class Comment(models.Model):
     content = models.TextField()
-    data_creacio = models.DateField()
+    data_creacio = models.DateField(auto_now=True, null=False, blank=False)
     owner = models.ForeignKey(oauth_models.USER_MODEL, on_delete=models.CASCADE)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
     adjunt = models.ForeignKey(Attachment,on_delete=models.CASCADE,null=True)

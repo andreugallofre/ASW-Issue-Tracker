@@ -1,6 +1,7 @@
-from ..models import Issue, Vote, Watch, Comment
+from ..models import Issue, Vote, Watch, Comment, User
 from rest_framework import serializers
 from social_django import models as oauth_models
+import datetime
 
 
 class VoteSerializer(serializers.RelatedField):
@@ -31,7 +32,12 @@ class IssueSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['titol', 'descripcio', 'data_creacio', 'creator', 'assignee',
                   'tipus', 'prioritat', 'status', 'vote_set', 'watch_set']
 
-class CommentSerializer(serializers.HyperlinkedModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['content', 'issue', 'adjunt']
+        fields = ['content', 'issue', 'adjunt', 'data_creacio', 'owner']
+
+class UserSerializer(serializers.RelatedField):
+    class Meta:
+        model = User
+        fields = ['name, email']
