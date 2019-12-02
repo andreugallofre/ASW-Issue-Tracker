@@ -33,6 +33,7 @@ class IssueSerializer(serializers.HyperlinkedModelSerializer):
                   'tipus', 'prioritat', 'status', 'vote_set', 'watch_set']
 
 class CommentSerializer(serializers.ModelSerializer):
+    owner = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     class Meta:
         model = Comment
         fields = ['content', 'issue', 'adjunt', 'data_creacio', 'owner']
