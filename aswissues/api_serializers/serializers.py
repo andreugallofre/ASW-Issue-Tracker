@@ -1,6 +1,6 @@
 from ..models import Issue, Vote, Watch, Comment, User, Attachment
 from rest_framework import serializers
-from social_django import models as oauth_models
+from social_django.models import UserSocialAuth
 import datetime
 
 
@@ -35,7 +35,7 @@ class AttachmentSerializer(serializers.ModelSerializer):
 
 class IssueSerializer(serializers.HyperlinkedModelSerializer):
     creator = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
-    assignee = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+    assignee = serializers.PrimaryKeyRelatedField(many=False, queryset=UserSocialAuth.objects.all())
 
     vote_set = VoteSerializer(read_only=True, many=True)
     watch_set = WatcherSerializer(read_only=True, many=True)
