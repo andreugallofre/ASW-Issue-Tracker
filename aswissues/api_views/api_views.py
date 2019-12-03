@@ -2,6 +2,7 @@ from ..models import Issue, Comment, Attachment
 from rest_framework import viewsets
 from ..api_serializers.serializers import IssueSerializer, CommentSerializer, AttachmentSerializer
 from rest_framework.response import Response
+from rest_framework import filters
 
 
 class IssueViewSet(viewsets.ModelViewSet):
@@ -10,6 +11,11 @@ class IssueViewSet(viewsets.ModelViewSet):
     """
     queryset = Issue.objects.all()
     serializer_class = IssueSerializer
+
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['titol', 'descripcio', 'data_creacio',
+                     'tipus', 'prioritat', 'status']
+    ordering_fields = '__all__'
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
