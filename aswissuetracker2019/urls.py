@@ -35,6 +35,7 @@ schema_view = get_swagger_view(title='Pastebin API')
 router = routers.DefaultRouter()
 router.register(r'issues', api_views.IssueViewSet)
 router.register(r'comment', api_views.CommentViewSet, 'comment')
+router.register(r'adjunts', api_views.AttachmentViewSet, 'adjunts')
 
 urlpatterns = [
     path('api/', include(router.urls)),
