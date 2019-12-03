@@ -19,9 +19,10 @@ class WatcherSerializer(serializers.RelatedField):
     class Meta:
         model = Watch
 
+
 class AttachmentSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
-    #adjunt_url = serializers.SerializerMethodField()
+    # adjunt_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Attachment
@@ -45,11 +46,14 @@ class IssueSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['titol', 'descripcio', 'data_creacio', 'creator', 'assignee',
                   'tipus', 'prioritat', 'status', 'vote_set', 'watch_set']
 
+
 class CommentSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+
     class Meta:
         model = Comment
         fields = ['content', 'issue', 'adjunt', 'data_creacio', 'owner']
+
 
 class UserSerializer(serializers.RelatedField):
     class Meta:
