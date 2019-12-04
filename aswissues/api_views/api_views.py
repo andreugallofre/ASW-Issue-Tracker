@@ -25,7 +25,10 @@ class CommentViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows a single comment to be viewed or edited.
     """
+    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['issue__id']
 
     def get_queryset(self):
         """
