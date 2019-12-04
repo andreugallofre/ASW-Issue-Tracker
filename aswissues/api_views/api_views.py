@@ -44,18 +44,23 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 class AttachmentViewSet(viewsets.ModelViewSet):
     # queryset = Attachment.objects.all()
+    queryset = Attachment.objects.all()
     serializer_class = AttachmentSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['issue__id']
 
     def get_queryset(self):
         """
         Optionally restricts the returned purchases to a given user,
         by filtering against a `username` query parameter in the URL.
         """
+
         # serializer_class = AttachmentSerializer(Attachment, context={"request":self.request})
         queryset = Attachment.objects.all()
         nissue = self.request.query_params.get('issue', None)
         if nissue is not None:
             queryset = queryset.filter(issue__id=nissue)
+
         return queryset
 
     def perform_create(self, serializer):
