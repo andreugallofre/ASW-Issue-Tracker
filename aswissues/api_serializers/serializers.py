@@ -14,7 +14,7 @@ class VoteSerializer(serializers.HyperlinkedModelSerializer):
         model = Vote
         fields = ['issue', 'voter', 'type']
 
-class WatcherSerializer(serializers.RelatedField):
+class WatcherSerializer(serializers.HyperlinkedModelSerializer):
     watcher = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     issue = serializers.PrimaryKeyRelatedField(many=False, queryset=Issue.objects.all())
     type = serializers.BooleanField(read_only= True)
