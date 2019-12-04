@@ -58,7 +58,8 @@ urlpatterns = [
     path('issue/<slug:pk>/unwatch', issue_unwatch, name='issue_unwatch'),
     path('issue/<slug:id>/comment/delete/<slug:pk>', delete_comment, name='delete_comment'),
     path('issue/<slug:id>/comment/update/<slug:pk>', update_comment, name='update_comment'),
-    path('auth/', include(('social_django.urls', 'social_django'), namespace='social_auth')),
+    #path('auth/', include(('social_django.urls', 'social_django'), namespace='social_auth')),
+    url(r'^auth/', include('rest_framework_social_oauth2.urls')),
     url('api/swagger', schema_view),
     url(r'^$', HomePageView.as_view(), name='home'),
 ]
