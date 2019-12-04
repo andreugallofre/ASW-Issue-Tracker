@@ -67,4 +67,4 @@ class VotesViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(voter=self.request.user)
-        serializer.save(type=True)
+        serializer.save(type=1)
