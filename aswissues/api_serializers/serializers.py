@@ -5,13 +5,17 @@ from django.contrib.auth.models import User as social_users
 import datetime
 
 
-class VoteSerializer(serializers.RelatedField):
+class VoteSerializer(serializers.HyperlinkedModelSerializer):
+    voter = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+    issue = serializers.PrimaryKeyRelatedField(many=False, queryset=Issue.objects.all())
+    type = serializers.BooleanField(read_only= True)
+    '''
     def to_representation(self, value):
         return value.voter.id
-
+    '''
     class Meta:
         model = Vote
-
+        fields = ['issue', 'voter', 'type']
 
 class WatcherSerializer(serializers.RelatedField):
     def to_representation(self, value):

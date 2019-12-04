@@ -36,6 +36,7 @@ router = routers.DefaultRouter()
 router.register(r'issues', api_views.IssueViewSet)
 router.register(r'comment', api_views.CommentViewSet, 'comment')
 router.register(r'adjunts', api_views.AttachmentViewSet, 'adjunts')
+router.register(r'vote', api_views.VotesViewSet, 'vote')
 
 urlpatterns = [
     path('api/', include(router.urls)),
