@@ -37,6 +37,7 @@ router.register(r'issues', api_views.IssueViewSet)
 router.register(r'comment', api_views.CommentViewSet, 'comment')
 router.register(r'adjunts', api_views.AttachmentViewSet, 'adjunts')
 router.register(r'vote', api_views.VotesViewSet, 'vote')
+router.register(r'watch', api_views.WatchersViewSet, 'watch')
 
 urlpatterns = [
     path('api/', include(router.urls)),

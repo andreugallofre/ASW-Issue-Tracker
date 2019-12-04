@@ -9,21 +9,19 @@ class VoteSerializer(serializers.HyperlinkedModelSerializer):
     voter = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     issue = serializers.PrimaryKeyRelatedField(many=False, queryset=Issue.objects.all())
     type = serializers.BooleanField(read_only= True)
-    '''
-    def to_representation(self, value):
-        return value.voter.id
-    '''
+
     class Meta:
         model = Vote
         fields = ['issue', 'voter', 'type']
 
 class WatcherSerializer(serializers.RelatedField):
-    def to_representation(self, value):
-        return value.watcher.id
+    watcher = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+    issue = serializers.PrimaryKeyRelatedField(many=False, queryset=Issue.objects.all())
+    type = serializers.BooleanField(read_only= True)
 
     class Meta:
         model = Watch
-
+        fields = ['issue', 'watcher', 'type']
 
 class AttachmentSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(many=False, read_only=True)

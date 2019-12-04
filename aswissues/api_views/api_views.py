@@ -1,6 +1,6 @@
-from ..models import Issue, Comment, Attachment, Vote
+from ..models import Issue, Comment, Attachment, Vote, Watch
 from rest_framework import viewsets
-from ..api_serializers.serializers import IssueSerializer, CommentSerializer, AttachmentSerializer, VoteSerializer
+from ..api_serializers.serializers import IssueSerializer, CommentSerializer, AttachmentSerializer, VoteSerializer, WatcherSerializer
 from rest_framework.response import Response
 from rest_framework import filters
 
@@ -67,4 +67,12 @@ class VotesViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(voter=self.request.user)
+        serializer.save(type=True)
+
+class WatchersViewSet(viewsets.ModelViewSet):
+    serializer_class = WatcherSerializer
+    queryset = Watch.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save(watcher=self.request.user)
         serializer.save(type=True)
