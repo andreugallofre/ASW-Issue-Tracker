@@ -55,10 +55,10 @@ class Comment(models.Model):
 class Vote(models.Model):
     voter = models.ForeignKey(oauth_models.USER_MODEL, on_delete=models.CASCADE)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
-    type = models.BooleanField()
+    type = models.BooleanField(null=True)
 
 
 class Watch(models.Model):
     watcher = models.ForeignKey(oauth_models.USER_MODEL, on_delete=models.CASCADE)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
-    type = models.BooleanField()
+    type = models.BooleanField(null=True)
