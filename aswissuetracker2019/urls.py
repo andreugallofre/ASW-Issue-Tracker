@@ -30,6 +30,7 @@ from rest_framework import routers, permissions
 from aswissues.api_views import api_views
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from rest_framework.authtoken.views import obtain_auth_token  # <-- Here
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -73,6 +74,7 @@ urlpatterns = [
     path('issue/<slug:id>/comment/delete/<slug:pk>', delete_comment, name='delete_comment'),
     path('issue/<slug:id>/comment/update/<slug:pk>', update_comment, name='update_comment'),
     path('auth/', include(('social_django.urls', 'social_django'), namespace='social_auth')),
+    path('api/token-auth/', obtain_auth_token, name='api_token_auth'),  # <-- And here
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),

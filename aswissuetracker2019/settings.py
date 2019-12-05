@@ -53,7 +53,7 @@ SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
         "api_key": {
             "type": "apiKey",
-            "name": "api_key",
+            "name": "Authorization",
             "in": "header"
         }
     },
