@@ -28,6 +28,7 @@ from aswissues.views import NewIssue, DetailedIssue, issue_vote, issue_unvote, i
 from rest_framework import routers
 from rest_framework_swagger.views import get_swagger_view
 from aswissues.api_views import api_views
+from rest_framework.authtoken.views import obtain_auth_token  # <-- Here
 
 # REST API Router
 schema_view = get_swagger_view(title='Pastebin API')
@@ -60,6 +61,7 @@ urlpatterns = [
     path('issue/<slug:id>/comment/update/<slug:pk>', update_comment, name='update_comment'),
     path('auth/', include(('social_django.urls', 'social_django'), namespace='social_auth')),
     url('api/swagger', schema_view),
+    path('api/api-token-auth/', obtain_auth_token, name='api_token_auth'),  # <-- And here
     url(r'^$', HomePageView.as_view(), name='home'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
