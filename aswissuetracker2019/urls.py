@@ -25,13 +25,26 @@ from django.conf.urls.static import static
 from aswissues.views import NewIssue, DetailedIssue, issue_vote, issue_unvote, issue_watch, issue_unwatch, issue_delete, delete_comment, EditarIssue, AttachIssue, update_comment, ChangeState
 
 # REST API Related imports
-from rest_framework import routers
-from rest_framework_swagger.views import get_swagger_view
+from rest_framework import routers, permissions
+# from rest_framework_swagger.views import get_swagger_view
 from aswissues.api_views import api_views
-from rest_framework.authtoken.views import obtain_auth_token  # <-- Here
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Issues API",
+      default_version='v1',
+      description="Test description",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="contact@snippets.local"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=(permissions.IsAuthenticatedOrReadOnly,),
+)
 
 # REST API Router
-schema_view = get_swagger_view(title='Pastebin API')
 
 router = routers.DefaultRouter()
 router.register(r'issues', api_views.IssueViewSet)
@@ -60,8 +73,9 @@ urlpatterns = [
     path('issue/<slug:id>/comment/delete/<slug:pk>', delete_comment, name='delete_comment'),
     path('issue/<slug:id>/comment/update/<slug:pk>', update_comment, name='update_comment'),
     path('auth/', include(('social_django.urls', 'social_django'), namespace='social_auth')),
-    url('api/swagger', schema_view),
-    path('api/api-token-auth/', obtain_auth_token, name='api_token_auth'),  # <-- And here
+    url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     url(r'^$', HomePageView.as_view(), name='home'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

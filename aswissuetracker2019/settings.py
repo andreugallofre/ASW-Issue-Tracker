@@ -44,8 +44,12 @@ INSTALLED_APPS = [
     'django_tables2',
     'django_filters',
     'rest_framework',
+<<<<<<< HEAD
     'rest_framework_swagger',
     'rest_framework.authtoken',
+=======
+    'drf_yasg',
+>>>>>>> master
     'corsheaders',
 ]
 
@@ -64,9 +68,15 @@ SWAGGER_SETTINGS = {
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+<<<<<<< HEAD
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',  # <-- And here
     ],
+=======
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ]
+>>>>>>> master
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
