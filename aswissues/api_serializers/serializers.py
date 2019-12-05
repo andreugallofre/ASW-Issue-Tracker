@@ -12,7 +12,7 @@ class VoteSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Vote
-        fields = ['issue', 'voter', 'type']
+        fields = ['id','issue', 'voter', 'type']
 
 class WatcherSerializer(serializers.HyperlinkedModelSerializer):
     watcher = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
@@ -21,7 +21,7 @@ class WatcherSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Watch
-        fields = ['issue', 'watcher', 'type']
+        fields = ['id','issue', 'watcher', 'type']
 
 class AttachmentSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
@@ -29,7 +29,7 @@ class AttachmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Attachment
-        fields = ['issue', 'data_creacio', 'owner', 'data']
+        fields = ['id','issue', 'data_creacio', 'owner', 'data']
 
     def get_adjunt_url(self, Attachment):
         request = self.context.get('request')
@@ -46,7 +46,7 @@ class IssueSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Issue
-        fields = ['titol', 'descripcio', 'data_creacio', 'creator', 'assignee',
+        fields = ['id','titol', 'descripcio', 'data_creacio', 'creator', 'assignee',
                   'tipus', 'prioritat', 'status', 'vote_set', 'watch_set']
 
 
@@ -55,10 +55,10 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ['content', 'issue', 'adjunt', 'data_creacio', 'owner']
+        fields = ['id','content', 'issue', 'adjunt', 'data_creacio', 'owner']
 
 
 class UserSerializer(serializers.RelatedField):
     class Meta:
         model = User
-        fields = ['name, email']
+        fields = ['id','name, email']
