@@ -1,0 +1,480 @@
+swagger: '2.0'
+# Token 05a9b35f3fc99505ad75a9a6eb236771a301f613
+# Token a86c3b4efbcc61ed92d7f49d229be544c4d32f43
+info:
+  title: Issues API
+  description: Test description
+  version: v1
+host: asw-issue-tracker-2019.herokuapp.com
+schemes:
+  - https
+basePath: /api
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: Authorization
+    in: header
+security:
+  - api_key: []
+paths:
+  /adjunts/:
+    get:
+      operationId: adjunts_list
+      description: ''
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Attachment'
+      tags:
+        - adjunts
+    post:
+      operationId: adjunts_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Attachment'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Attachment'
+      tags:
+        - adjunts
+    parameters: []
+  /adjunts/{id}/:
+    get:
+      operationId: adjunts_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Attachment'
+      tags:
+        - adjunts
+    put:
+      operationId: adjunts_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Attachment'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Attachment'
+      tags:
+        - adjunts
+    delete:
+      operationId: adjunts_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - adjunts
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this attachment.
+        required: true
+        type: integer
+  /comment/:
+    get:
+      operationId: comment_list
+      description: API endpoint that allows a single comment to be viewed or edited.
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Comment'
+      tags:
+        - comment
+    post:
+      operationId: comment_create
+      description: API endpoint that allows a single comment to be viewed or edited.
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Comment'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Comment'
+      tags:
+        - comment
+    parameters: []
+  /comment/{id}/:
+    get:
+      operationId: comment_read
+      description: API endpoint that allows a single comment to be viewed or edited.
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Comment'
+      tags:
+        - comment
+    put:
+      operationId: comment_update
+      description: API endpoint that allows a single comment to be viewed or edited.
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Comment'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Comment'
+      tags:
+        - comment
+    delete:
+      operationId: comment_delete
+      description: API endpoint that allows a single comment to be viewed or edited.
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - comment
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this comment.
+        required: true
+        type: integer
+  /issues/:
+    get:
+      operationId: issues_list
+      description: API endpoint that allows issues to be viewed or edited.
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: ordering
+          in: query
+          description: Which field to use when ordering the results.
+          required: false
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Issue'
+      tags:
+        - issues
+    post:
+      operationId: issues_create
+      description: API endpoint that allows issues to be viewed or edited.
+      parameters:
+        - name: data
+          in: body
+          schema:
+            $ref: '#/definitions/Issue'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Issue'
+      tags:
+        - issues
+    parameters: []
+  /issues/{id}/:
+    get:
+      operationId: issues_read
+      description: API endpoint that allows issues to be viewed or edited.
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Issue'
+      tags:
+        - issues
+    put:
+      operationId: issues_update
+      description: API endpoint that allows issues to be viewed or edited.
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Issue'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Issue'
+      tags:
+        - issues
+    delete:
+      operationId: issues_delete
+      description: API endpoint that allows issues to be viewed or edited.
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - issues
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this issue.
+        required: true
+        type: integer
+  /vote/:
+    post:
+      operationId: vote_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Vote'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Vote'
+      tags:
+        - vote
+    parameters: []
+  /vote/{id}/:
+    delete:
+      operationId: vote_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - vote
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this vote.
+        required: true
+        type: integer
+  /watch/:
+    post:
+      operationId: watch_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Watcher'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Watcher'
+      tags:
+        - watch
+    parameters: []
+  /watch/{id}/:
+    delete:
+      operationId: watch_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - watch
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this watch.
+        required: true
+        type: integer
+definitions:
+  Attachment:
+    required:
+      - issue
+      - data_creacio
+    type: object
+    properties:
+      issue:
+        title: Issue
+        type: integer
+      data_creacio:
+        title: Data creacio
+        type: string
+        format: date
+      owner:
+        title: Owner
+        type: integer
+        readOnly: true
+      data:
+        title: Data
+        type: string
+        readOnly: true
+        format: uri
+  Comment:
+    required:
+      - content
+      - issue
+    type: object
+    properties:
+      content:
+        title: Content
+        type: string
+        minLength: 1
+      issue:
+        title: Issue
+        type: integer
+      adjunt:
+        title: Adjunt
+        type: integer
+        x-nullable: true
+      data_creacio:
+        title: Data creacio
+        type: string
+        format: date
+        readOnly: true
+      owner:
+        title: Owner
+        type: integer
+        readOnly: true
+  Vote:
+    required:
+      - issue
+    type: object
+    properties:
+      issue:
+        title: Issue
+        type: integer
+      voter:
+        title: Voter
+        type: integer
+        readOnly: true
+      type:
+        title: Type
+        type: boolean
+        readOnly: true
+  Watcher:
+    required:
+      - issue
+    type: object
+    properties:
+      issue:
+        title: Issue
+        type: integer
+      watcher:
+        title: Watcher
+        type: integer
+        readOnly: true
+      type:
+        title: Type
+        type: boolean
+        readOnly: true
+  Issue:
+    required:
+      - titol
+      - descripcio
+      - data_creacio
+      - assignee
+    type: object
+    properties:
+      titol:
+        title: Titol
+        type: string
+        maxLength: 200
+        minLength: 1
+      descripcio:
+        title: Descripcio
+        type: string
+        minLength: 1
+      data_creacio:
+        title: Data creacio
+        type: string
+        format: date
+      creator:
+        title: Creator
+        type: integer
+        readOnly: true
+      assignee:
+        title: Assignee
+        type: integer
+      tipus:
+        title: Tipus
+        type: string
+        enum:
+          - Bug
+          - Millora
+          - Proposta
+          - Tasca
+      prioritat:
+        title: Prioritat
+        type: string
+        enum:
+          - Trivial
+          - Menor
+          - Major
+          - Critica
+          - Bloquejant
+      status:
+        title: Status
+        type: string
+        enum:
+          - Nou
+          - Obert
+          - Resolt
+          - Espera
+          - Invalit
+          - Duplicat
+          - NoFix
+          - Tancat
+      vote_set:
+        type: array
+        items:
+          $ref: '#/definitions/Vote'
+        readOnly: true
+      watch_set:
+        type: array
+        items:
+          $ref: '#/definitions/Watcher'
+        readOnly: true
