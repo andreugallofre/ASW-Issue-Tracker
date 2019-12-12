@@ -78,7 +78,7 @@ class VotesViewSet(viewsets.ModelViewSet):
         serializer.save(voter=self.request.user)
         serializer.save(type=True)
 
-class UserList(generics.ListAPIView):
+class UserList(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
