@@ -1,7 +1,8 @@
 from ..models import Issue, Comment, Attachment, Vote, Watch
 from rest_framework import viewsets
-from ..api_serializers.serializers import IssueSerializer, CommentSerializer, AttachmentSerializer, VoteSerializer, WatcherSerializer
+from ..api_serializers.serializers import IssueSerializer, CommentSerializer, AttachmentSerializer, VoteSerializer, WatcherSerializer, UserSerializer
 from rest_framework.response import Response
+from django.contrib.auth.models import User
 from rest_framework import filters
 from django.views import generic
 
