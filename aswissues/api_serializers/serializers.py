@@ -59,7 +59,7 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ['id','content', 'issue', 'adjunt', 'data_creacio', 'owner']
 
 
-class UserSerializer(serializers.RelatedField):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id','name', 'email']
