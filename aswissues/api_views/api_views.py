@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from ..api_serializers.serializers import IssueSerializer, CommentSerializer, AttachmentSerializer, VoteSerializer, WatcherSerializer
 from rest_framework.response import Response
 from rest_framework import filters
+from django.views import generic
 
 
 class IssueViewSet(viewsets.ModelViewSet):

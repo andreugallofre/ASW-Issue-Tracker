@@ -2,7 +2,7 @@ from ..models import Issue, Vote, Watch, Comment, User, Attachment
 from rest_framework import serializers
 # from django.db import User as test
 from django.contrib.auth.models import User as social_users
-from django.views import generic
+
 import datetime
 
 
