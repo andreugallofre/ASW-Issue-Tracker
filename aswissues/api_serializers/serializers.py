@@ -61,4 +61,4 @@ class CommentSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.RelatedField):
     class Meta:
         model = User
-        fields = ['id','name, email']
+        fields = ['id','name', 'email']
