@@ -2,6 +2,7 @@ from ..models import Issue, Vote, Watch, Comment, User, Attachment
 from rest_framework import serializers
 # from django.db import User as test
 from django.contrib.auth.models import User as social_users
+
 import datetime
 
 
@@ -58,7 +59,7 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ['id','content', 'issue', 'adjunt', 'data_creacio', 'owner']
 
 
-class UserSerializer(serializers.RelatedField):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ['id','name, email']
+        model = social_users
+        fields = ['id','username']

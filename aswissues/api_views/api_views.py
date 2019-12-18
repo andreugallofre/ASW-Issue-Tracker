@@ -1,7 +1,8 @@
 from ..models import Issue, Comment, Attachment, Vote, Watch
 from rest_framework import viewsets
-from ..api_serializers.serializers import IssueSerializer, CommentSerializer, AttachmentSerializer, VoteSerializer, WatcherSerializer
+from ..api_serializers.serializers import IssueSerializer, CommentSerializer, AttachmentSerializer, VoteSerializer, WatcherSerializer, UserSerializer
 from rest_framework.response import Response
+from django.contrib.auth.models import User
 from rest_framework import filters
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
@@ -9,6 +10,7 @@ from rest_framework.decorators import api_view
 from django.http import HttpResponse, JsonResponse
 from rest_framework.authtoken.models import Token
 import json
+from django.views import generic
 
 
 @csrf_exempt
@@ -89,6 +91,13 @@ class VotesViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(voter=self.request.user)
         serializer.save(type=True)
+
+class UserList(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+
+
 
 class WatchersViewSet(viewsets.ModelViewSet):
     serializer_class = WatcherSerializer
