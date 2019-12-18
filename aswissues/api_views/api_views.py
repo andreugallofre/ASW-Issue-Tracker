@@ -3,6 +3,19 @@ from rest_framework import viewsets
 from ..api_serializers.serializers import IssueSerializer, CommentSerializer, AttachmentSerializer, VoteSerializer, WatcherSerializer
 from rest_framework.response import Response
 from rest_framework import filters
+from django.shortcuts import render, redirect
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
+from rest_framework.decorators import api_view
+from django.http import HttpResponse, JsonResponse
+from rest_framework.authtoken.models import Token
+import json
+
+
+@csrf_exempt
+@api_view(['POST'])
+def check_token(request, format=None):
+    token = Token.objects.filter(key=request.data['token']).exists()
+    return JsonResponse({"status": token})
 
 
 class IssueViewSet(viewsets.ModelViewSet):

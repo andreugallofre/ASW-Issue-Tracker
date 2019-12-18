@@ -63,7 +63,6 @@ urlpatterns = [
     path('attach/<slug:pk>/', AttachIssue.as_view(), name="fitxerAdjunt"),
     path('chstate/<slug:pk>/<slug:status>', ChangeState.as_view(), name='change_state'),
     path('register/', Register.as_view()),
-    path('', include('social_django.urls', namespace='social')),
     path('logout/', include('django.contrib.auth.urls'), name='logout'),
     path('edit/<slug:id>/', EditarIssue, name='EditarIssue'),
     path('issue/<slug:pk>/vote', issue_vote, name='issue_vote'),
@@ -73,11 +72,11 @@ urlpatterns = [
     path('issue/<slug:pk>/unwatch', issue_unwatch, name='issue_unwatch'),
     path('issue/<slug:id>/comment/delete/<slug:pk>', delete_comment, name='delete_comment'),
     path('issue/<slug:id>/comment/update/<slug:pk>', update_comment, name='update_comment'),
-    path('auth/', include(('social_django.urls', 'social_django'), namespace='social_auth')),
-    path('api/token-auth/', obtain_auth_token, name='api_token_auth'),  # <-- And here
-    url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    url(r'^api/login/', include('rest_social_auth.urls_jwt')),
+    url(r'^api/login/', include('rest_social_auth.urls_token')),
+    url(r'^api/login/', include('rest_social_auth.urls_session')),
+    url(r'^auth/', include('rest_framework_social_oauth2.urls')),
+    url(r'api/check/', api_views.check_token),
     url(r'^$', HomePageView.as_view(), name='home'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
