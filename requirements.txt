@@ -14,7 +14,7 @@ django-rest-framework-social-oauth2==1.1.0
 django-rest-swagger==2.2.0
 django-tables2==2.2.0
 djangorestframework==3.10.3
-drf-jwt==1.13.4
+drf-jwt==1.15.1
 drf-yasg==1.17.0
 gunicorn==19.9.0
 heroku==0.1.4
